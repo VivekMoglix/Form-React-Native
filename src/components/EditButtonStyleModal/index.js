@@ -3,9 +3,11 @@ import {Modal, View, Text, TextInput, TouchableOpacity} from 'react-native';
 
 export default function EditButtonStyleModal(props) {
   const {editButtonStyleModalVisible} = props;
-  const {borderColor, textColor, backgroundColor} = props?.buttonData?.editable;
+  const {borderColor, textColor, backgroundColor, fontFamily} =
+    props?.buttonData?.editable;
   const [editBorderColor, setEditBorderColor] = useState(borderColor);
   const [editTextColor, setEditTextColor] = useState(textColor);
+  const [editFontFamily, setEditFontFamily] = useState(fontFamily);
   const [editBackgroundColor, setEditBackgroundColor] =
     useState(backgroundColor);
 
@@ -16,6 +18,7 @@ export default function EditButtonStyleModal(props) {
         borderColor: editBorderColor,
         textColor: editTextColor,
         backgroundColor: editBackgroundColor,
+        fontFamily: editFontFamily,
       },
     });
   };
@@ -68,6 +71,14 @@ export default function EditButtonStyleModal(props) {
               style={{borderWidth: 1, borderColor: '#1D2226', width: 250}}
               value={editBackgroundColor}
               onChangeText={setEditBackgroundColor}
+            />
+          </View>
+          <View>
+            <Text style={{color: '#1D2226', marginBottom: 5}}>Font</Text>
+            <TextInput
+              style={{borderWidth: 1, borderColor: '#1D2226', width: 250}}
+              value={editFontFamily}
+              onChangeText={setEditFontFamily}
             />
           </View>
           <TouchableOpacity

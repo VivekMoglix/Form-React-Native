@@ -16,6 +16,7 @@ export default function Form() {
       labelColor: '#1D2226',
       textColor: '#1D2226',
       borderColor: '#D9232D',
+      fontFamily: 'Poppins-Regular',
     },
   });
   const [buttonData, setButtonData] = useState({
@@ -24,6 +25,7 @@ export default function Form() {
       borderColor: '#D9232D',
       textColor: '#fff',
       backgroundColor: '#D9232D',
+      fontFamily: 'Poppins-Regular',
     },
   });
   return (

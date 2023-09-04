@@ -1,7 +1,7 @@
 import {Button, Text, TextInput, TouchableOpacity, View} from 'react-native';
 
 export default function CustomTextInput(props) {
-  const {value, label, textColor, borderColor, labelColor} =
+  const {value, label, textColor, borderColor, labelColor, fontFamily} =
     props?.textFieldData?.editable;
 
   const handleTextChange = text => {
@@ -17,7 +17,7 @@ export default function CustomTextInput(props) {
           justifyContent: 'space-between',
           marginBottom: 5,
         }}>
-        <Text style={{color: labelColor}}>{label}</Text>
+        <Text style={{color: labelColor, fontFamily}}>{label}</Text>
         <TouchableOpacity>
           <Text onPress={() => props?.setModalVisible(true)}>Edit</Text>
         </TouchableOpacity>
@@ -29,6 +29,7 @@ export default function CustomTextInput(props) {
           paddingHorizontal: 8,
           paddingVertical: 4,
           color: textColor,
+          fontFamily,
         }}
         value={value}
         onChangeText={text => handleTextChange(text)}

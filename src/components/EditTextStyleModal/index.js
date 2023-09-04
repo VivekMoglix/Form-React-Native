@@ -3,12 +3,13 @@ import {Modal, View, Text, TextInput, TouchableOpacity} from 'react-native';
 
 export default function EditTextStyleModal(props) {
   const {modalVisible} = props;
-  const {borderColor, textColor, label, labelColor} =
+  const {borderColor, textColor, label, labelColor, fontFamily} =
     props?.textFieldData?.editable;
   const [editLabel, setEditLabel] = useState(label);
   const [editBorderColor, setEditBorderColor] = useState(borderColor);
   const [editTextColor, setEditTextColor] = useState(textColor);
   const [editLabelColor, setEditLabelColor] = useState(labelColor);
+  const [editFontFamily, setEditFontFamily] = useState(fontFamily);
   const handleSubmit = () => {
     props?.setTextFieldData({
       ...props?.textFieldData,
@@ -17,6 +18,7 @@ export default function EditTextStyleModal(props) {
         labelColor: editLabelColor,
         textColor: editTextColor,
         borderColor: editBorderColor,
+        fontFamily: editFontFamily,
       },
     });
   };
@@ -72,6 +74,14 @@ export default function EditTextStyleModal(props) {
               style={{borderWidth: 1, borderColor: '#1D2226', width: 250}}
               value={editLabelColor}
               onChangeText={setEditLabelColor}
+            />
+          </View>
+          <View>
+            <Text style={{color: '#1D2226', marginBottom: 5}}>Font</Text>
+            <TextInput
+              style={{borderWidth: 1, borderColor: '#1D2226', width: 250}}
+              value={editFontFamily}
+              onChangeText={setEditFontFamily}
             />
           </View>
           <TouchableOpacity
