@@ -1,0 +1,7 @@
+{
+  "TextField": {
+    "editLabel": true,
+    "editTextColor": true,
+    "editBorderColor": true
+  }
+}
