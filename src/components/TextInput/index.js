@@ -1,41 +1,79 @@
-import {Button, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import React from 'react';
+import {
+  ActivityIndicator,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import PropTypes from 'prop-types';
 
-export default function CustomTextInput(props) {
-  const {value, label, textColor, borderColor, labelColor, fontFamily} =
-    props?.textFieldData?.editable;
-
-  const handleTextChange = text => {
-    props.setTextFieldData({...props?.textFieldData, value: text});
-  };
-
-  return (
-    <View>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginBottom: 5,
-        }}>
-        <Text style={{color: labelColor, fontFamily}}>{label}</Text>
-        <TouchableOpacity>
-          <Text onPress={() => props?.setModalVisible(true)}>Edit</Text>
-        </TouchableOpacity>
+class CustomTextField extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log(props);
+  }
+  render() {
+    const {
+      label,
+      variant,
+      backgroundColor,
+      leading,
+      trailing,
+      labelStyles,
+      onChangeText,
+      inputContainerStyles,
+      textStyles,
+    } = this.props;
+    return (
+      <View>
+        <Text style={labelStyles}>{label}</Text>
+        <View
+          style={[
+            {
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingLeft: leading ? 4 : 0,
+              paddingRight: trailing ? 4 : 0,
+              borderRadius: variant === 'filled' ? 4 : 0,
+              backgroundColor:
+                variant === 'filled' ? backgroundColor : 'transparent',
+              marginTop: 5,
+              paddingVertical: 0,
+              borderWidth: variant === 'outlined' ? 1 : 0,
+              borderBottomWidth:
+                variant === 'standard' ? 1 : variant === 'outlined' ? 1 : 0,
+            },
+            inputContainerStyles,
+          ]}>
+          {leading && <View>{leading()}</View>}
+          <TextInput
+            style={[{flex: 2}, textStyles]}
+            onChangeText={onChangeText}
+          />
+          {trailing && <View style={{marginLeft: 'auto'}}>{trailing()}</View>}
+        </View>
       </View>
-      <TextInput
-        style={{
-          borderWidth: 1,
-          borderColor,
-          paddingHorizontal: 8,
-          paddingVertical: 4,
-          color: textColor,
-          fontFamily,
-        }}
-        value={value}
-        onChangeText={text => handleTextChange(text)}
-        placeholder="Text Input"
-        placeholderTextColor={textColor}
-      />
-    </View>
-  );
+    );
+  }
 }
+
+CustomTextField.propTypes = {
+  label: PropTypes.string.isRequired,
+  size: PropTypes.string,
+  variant: PropTypes.oneOf(['filled', 'standard', 'outlined']),
+  backgroundColor: PropTypes.string,
+  leading: PropTypes.func,
+  trailing: PropTypes.func,
+  labelStyles: PropTypes.object,
+  onChangeText: PropTypes.func,
+  inputContainerStyles: PropTypes.object,
+  textStyles: PropTypes.object,
+};
+
+CustomTextField.defaultProps = {
+  variant: 'filled',
+  backgroundColor: '#dedede',
+};
+
+export default CustomTextField;

@@ -2,60 +2,37 @@ import {View} from 'react-native';
 import CustomTextInput from '../../components/TextInput';
 import {useState} from 'react';
 import CustomButton from '../../components/CustomButton';
-import EditButtonStyleModal from '../../components/EditButtonStyleModal';
-import EditTextStyleModal from '../../components/EditTextStyleModal';
+import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 
 export default function Form() {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [editButtonStyleModalVisible, setEditButtonStyleModalVisible] =
-    useState(false);
-  const [textFieldData, setTextFieldData] = useState({
-    value: '',
-    editable: {
-      label: 'Some label',
-      labelColor: '#1D2226',
-      textColor: '#1D2226',
-      borderColor: '#D9232D',
-      fontFamily: 'Poppins-Regular',
-    },
-  });
-  const [buttonData, setButtonData] = useState({
-    buttonName: 'Custom button',
-    editable: {
-      borderColor: '#D9232D',
-      textColor: '#fff',
-      backgroundColor: '#D9232D',
-      fontFamily: 'Poppins-Regular',
-    },
-  });
+  const [isLoading, setIsLoading] = useState(false);
   return (
-    <View style={{flex: 1}}>
+    <View>
       <CustomTextInput
-        textFieldData={textFieldData}
-        setTextFieldData={setTextFieldData}
-        setModalVisible={setModalVisible}
+        label="Input"
+        variant="filled"
+        leading={props => <Icon name={'account-circle'} size={24} {...props} />}
+        trailing={props => (
+          <Icon name={'account-circle'} size={24} color="red" {...props} />
+        )}
+        onChangeText={text => console.log(text)}
+        textStyles={{fontSize: 20, color: 'red'}}
       />
       <CustomButton
-        buttonData={buttonData}
-        setButtonData={setButtonData}
-        setEditButtonStyleModalVisible={setEditButtonStyleModalVisible}
+        buttonStyle={{marginTop: 20}}
+        size="small"
+        label="Button"
+        variant="filled"
+        backgroundColor="yellow"
+        withLoader={true}
+        isLoading={isLoading}
+        loaderColor="#000000"
+        loaderPosition="trailing"
+        loaderSize="small"
+        textStyles={{fontSize: 18, color: 'red'}}
+        leading={props => <Icon name={'account-circle'} size={24} {...props} />}
+        onPress={() => setIsLoading(!isLoading)}
       />
-      {modalVisible && (
-        <EditTextStyleModal
-          textFieldData={textFieldData}
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          setTextFieldData={setTextFieldData}
-        />
-      )}
-      {editButtonStyleModalVisible && (
-        <EditButtonStyleModal
-          buttonData={buttonData}
-          setButtonData={setButtonData}
-          editButtonStyleModalVisible={editButtonStyleModalVisible}
-          setEditButtonStyleModalVisible={setEditButtonStyleModalVisible}
-        />
-      )}
     </View>
   );
 }
