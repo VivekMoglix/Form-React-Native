@@ -2,85 +2,81 @@ import React from 'react';
 import {ActivityIndicator, Text, TouchableOpacity, View} from 'react-native';
 import PropTypes from 'prop-types';
 
-class CustomButton extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log(props);
-  }
-  render() {
-    const {
-      withLoader,
-      buttonStyle,
-      isLoading,
-      variant,
-      backgroundColor,
-      loaderColor,
-      loaderPosition,
-      label,
-      textStyles,
-      leading,
-      trailing,
-      onPress,
-      size,
-      loaderSize,
-    } = this.props;
-    return (
-      <TouchableOpacity
-        onPress={onPress}
-        style={[
-          {
-            width:
-              size === 'small'
-                ? 150
-                : size === 'medium'
-                ? 250
-                : size === 'large'
-                ? '100%'
-                : null,
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: 5,
-            borderWidth: variant === 'outlined' ? 1 : 0,
-            padding: 4,
-            flexDirection: 'row',
-            borderRadius: 4,
-            backgroundColor:
-              variant === 'filled' ? backgroundColor : 'transparent',
-          },
-          buttonStyle,
-        ]}>
-        {loaderPosition === 'leading' && withLoader ? (
-          isLoading ? (
-            <ActivityIndicator
-              style={{
-                position: 'absolute',
-                left: 10,
-              }}
-              size={loaderSize}
-              color={loaderColor}
-            />
-          ) : null
-        ) : null}
-        {leading && <View>{leading()}</View>}
-        <Text style={[{justifyContent: 'center', marginLeft: 8}, textStyles]}>
-          {label}
-        </Text>
-        {trailing && <View>{trailing()}</View>}
-        {loaderPosition === 'trailing' && withLoader ? (
-          isLoading ? (
-            <ActivityIndicator
-              style={{
-                position: 'absolute',
-                right: 10,
-              }}
-              size={loaderSize}
-              color={loaderColor}
-            />
-          ) : null
-        ) : null}
-      </TouchableOpacity>
-    );
-  }
+function CustomButton(props) {
+  const {
+    withLoader,
+    buttonStyle,
+    isLoading,
+    variant,
+    backgroundColor,
+    loaderColor,
+    loaderPosition,
+    label,
+    textStyles,
+    leading,
+    trailing,
+    onPress,
+    size,
+    loaderSize,
+    activeOpacity,
+  } = props;
+  return (
+    <TouchableOpacity
+      activeOpacity={activeOpacity}
+      onPress={onPress}
+      style={[
+        {
+          width:
+            size === 'small'
+              ? 150
+              : size === 'medium'
+              ? 250
+              : size === 'large'
+              ? '100%'
+              : null,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: 5,
+          borderWidth: variant === 'outlined' ? 1 : 0,
+          padding: 4,
+          flexDirection: 'row',
+          borderRadius: 4,
+          backgroundColor:
+            variant === 'filled' ? backgroundColor : 'transparent',
+        },
+        buttonStyle,
+      ]}>
+      {loaderPosition === 'leading' && withLoader ? (
+        isLoading ? (
+          <ActivityIndicator
+            style={{
+              position: 'absolute',
+              left: 10,
+            }}
+            size={loaderSize}
+            color={loaderColor}
+          />
+        ) : null
+      ) : null}
+      {leading && <View>{leading()}</View>}
+      <Text style={[{justifyContent: 'center', marginLeft: 8}, textStyles]}>
+        {label}
+      </Text>
+      {trailing && <View>{trailing()}</View>}
+      {loaderPosition === 'trailing' && withLoader ? (
+        isLoading ? (
+          <ActivityIndicator
+            style={{
+              position: 'absolute',
+              right: 10,
+            }}
+            size={loaderSize}
+            color={loaderColor}
+          />
+        ) : null
+      ) : null}
+    </TouchableOpacity>
+  );
 }
 
 CustomButton.propTypes = {
@@ -98,6 +94,7 @@ CustomButton.propTypes = {
   onPress: PropTypes.func,
   size: PropTypes.string,
   loaderSize: PropTypes.oneOf(['small', 'large']),
+  activeOpacity: PropTypes.number,
 };
 
 CustomButton.defaultProps = {
@@ -109,6 +106,7 @@ CustomButton.defaultProps = {
   loaderPosition: 'leading',
   loaderSize: 'small',
   size: 'small',
+  activeOpacity: 0.2,
 };
 
 export default CustomButton;

@@ -1,35 +1,42 @@
 import {View} from 'react-native';
 import CustomTextInput from '../../components/TextInput';
-import {useState} from 'react';
+import React, {useState} from 'react';
 import CustomButton from '../../components/CustomButton';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 
 export default function Form() {
   const [isLoading, setIsLoading] = useState(false);
+  const [text, setText] = useState('');
   return (
     <View>
       <CustomTextInput
         label="Input"
-        variant="filled"
-        leading={props => <Icon name={'account-circle'} size={24} {...props} />}
+        variant="standard"
+        // leading={props => <Icon name={'account-circle'} size={24} {...props} />}
         trailing={props => (
           <Icon name={'account-circle'} size={24} color="red" {...props} />
         )}
-        onChangeText={text => console.log(text)}
-        textStyles={{fontSize: 20, color: 'red'}}
+        value={text}
+        onChangeText={setText}
+        textStyles={{color: 'red'}}
+        placeholder={'Something'}
+        placeholderTextColor={'red'}
+        labelStyles={{color: '#000'}}
+        keyboardType="default"
+        inputMode="text"
       />
       <CustomButton
-        buttonStyle={{marginTop: 20}}
-        size="small"
         label="Button"
-        variant="filled"
+        buttonStyle={{marginTop: 20}}
+        size="large"
+        variant="outlined"
         backgroundColor="yellow"
         withLoader={true}
         isLoading={isLoading}
-        loaderColor="#000000"
+        loaderColor="red"
         loaderPosition="trailing"
         loaderSize="small"
-        textStyles={{fontSize: 18, color: 'red'}}
+        textStyles={{color: 'red'}}
         leading={props => <Icon name={'account-circle'} size={24} {...props} />}
         onPress={() => setIsLoading(!isLoading)}
       />
