@@ -1,29 +1,50 @@
 import React from 'react';
-import {ActivityIndicator, Text, TouchableOpacity, View} from 'react-native';
-import PropTypes from 'prop-types';
+import {
+  ActivityIndicator,
+  Text,
+  TouchableOpacity as NativeTouchable,
+  TouchableOpacityProps as NativeTouchableProps,
+  View,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 
-function CustomButton(props) {
-  const {
-    withLoader,
-    buttonStyle,
-    isLoading,
-    variant,
-    backgroundColor,
-    loaderColor,
-    loaderPosition,
-    label,
-    textStyles,
-    leading,
-    trailing,
-    onPress,
-    size,
-    loaderSize,
-    activeOpacity,
-  } = props;
+export interface CustomButtonProps extends NativeTouchableProps {
+  label?: string;
+  withLoader?: boolean;
+  variant?: 'standard' | 'outlined' | 'filled';
+  size?: 'small' | 'medium' | 'large';
+  loaderSize?: 'small' | 'large';
+  isLoading?: boolean;
+  textStyles: StyleProp<TextStyle>;
+  loaderPosition?: 'leading' | 'trailing';
+  backgroundColor?: string;
+  loaderColor?: string;
+  leading?: any;
+  trailing?: any;
+  buttonStyle?: StyleProp<ViewStyle>;
+}
+
+const CustomButton: React.FC<CustomButtonProps> = ({
+  label = 'Button',
+  withLoader = false,
+  variant = 'standard',
+  size = 'small',
+  loaderSize = 'small',
+  isLoading,
+  textStyles,
+  loaderPosition = 'leading',
+  backgroundColor = 'blue',
+  loaderColor = 'black',
+  leading,
+  trailing,
+  buttonStyle,
+  ...rest
+}) => {
   return (
-    <TouchableOpacity
-      activeOpacity={activeOpacity}
-      onPress={onPress}
+    <NativeTouchable
+      {...rest}
       style={[
         {
           width:
@@ -59,7 +80,16 @@ function CustomButton(props) {
         ) : null
       ) : null}
       {leading && <View>{leading()}</View>}
-      <Text style={[{justifyContent: 'center', marginLeft: 8}, textStyles]}>
+      <Text
+        style={[
+          {
+            justifyContent: 'center',
+            marginLeft: leading && 8,
+            marginRight: trailing && 8,
+            color: variant === 'filled' ? 'white' : 'black',
+          },
+          textStyles,
+        ]}>
         {label}
       </Text>
       {trailing && <View>{trailing()}</View>}
@@ -75,38 +105,8 @@ function CustomButton(props) {
           />
         ) : null
       ) : null}
-    </TouchableOpacity>
+    </NativeTouchable>
   );
-}
-
-CustomButton.propTypes = {
-  label: PropTypes.string.isRequired,
-  buttonStyle: PropTypes.object,
-  withLoader: PropTypes.bool,
-  isLoading: PropTypes.bool,
-  loaderColor: PropTypes.string,
-  loaderPosition: PropTypes.oneOf(['leading', 'trailing']),
-  variant: PropTypes.oneOf(['filled', 'standard', 'outlined']),
-  backgroundColor: PropTypes.string,
-  textStyles: PropTypes.object,
-  leading: PropTypes.func,
-  trailing: PropTypes.func,
-  onPress: PropTypes.func,
-  size: PropTypes.string,
-  loaderSize: PropTypes.oneOf(['small', 'large']),
-  activeOpacity: PropTypes.number,
-};
-
-CustomButton.defaultProps = {
-  withLoader: false,
-  isLoading: false,
-  loaderColor: '#fff',
-  variant: 'standard',
-  backgroundColor: 'blue',
-  loaderPosition: 'leading',
-  loaderSize: 'small',
-  size: 'small',
-  activeOpacity: 0.2,
 };
 
 export default CustomButton;

@@ -3,42 +3,34 @@ import CustomTextInput from '../../components/TextInput';
 import React, {useState} from 'react';
 import CustomButton from '../../components/CustomButton';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+import CustomSwitch from '../../components/CustomSwitch';
 
 export default function Form() {
   const [isLoading, setIsLoading] = useState(false);
   const [text, setText] = useState('');
+  const [isSwitchActive, setIsSwitchActive] = useState(false);
   return (
     <View>
       <CustomTextInput
-        label="Input"
-        variant="standard"
-        // leading={props => <Icon name={'account-circle'} size={24} {...props} />}
-        trailing={props => (
-          <Icon name={'account-circle'} size={24} color="red" {...props} />
-        )}
-        value={text}
-        onChangeText={setText}
-        textStyles={{color: 'red'}}
-        placeholder={'Something'}
-        placeholderTextColor={'red'}
-        labelStyles={{color: '#000'}}
-        keyboardType="default"
-        inputMode="text"
+        variant="filled"
+        inputContainerStyles={{marginBottom: 30}}
+        leading={props => <Icon name={'account-circle'} size={24} {...props} />}
       />
       <CustomButton
-        label="Button"
-        buttonStyle={{marginTop: 20}}
-        size="large"
-        variant="outlined"
-        backgroundColor="yellow"
+        variant="filled"
         withLoader={true}
         isLoading={isLoading}
-        loaderColor="red"
-        loaderPosition="trailing"
-        loaderSize="small"
-        textStyles={{color: 'red'}}
-        leading={props => <Icon name={'account-circle'} size={24} {...props} />}
-        onPress={() => setIsLoading(!isLoading)}
+        trailing={props => (
+          <Icon name={'account-circle'} size={24} {...props} />
+        )}
+      />
+      <CustomSwitch
+        value={isSwitchActive}
+        thumbColor={isSwitchActive ? 'red' : 'blue'}
+        trackColor={{false: 'red', true: 'green'}}
+        onValueChange={() => setIsSwitchActive(!isSwitchActive)}
+        label={'Switch'}
+        labelPosition={'leading'}
       />
     </View>
   );
