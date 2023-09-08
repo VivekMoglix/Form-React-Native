@@ -13,7 +13,7 @@ import {
 export interface CustomButtonProps extends NativeTouchableProps {
   label?: string;
   withLoader?: boolean;
-  variant?: 'standard' | 'outlined' | 'filled';
+  variant?: 'outlined' | 'filled';
   size?: 'small' | 'medium' | 'large';
   loaderSize?: 'small' | 'large';
   isLoading?: boolean;
@@ -29,14 +29,14 @@ export interface CustomButtonProps extends NativeTouchableProps {
 const CustomButton: React.FC<CustomButtonProps> = ({
   label = 'Button',
   withLoader = false,
-  variant = 'standard',
+  variant = 'outlined',
   size = 'small',
   loaderSize = 'small',
   isLoading,
   textStyles,
   loaderPosition = 'leading',
   backgroundColor = 'blue',
-  loaderColor = 'black',
+  loaderColor = variant === 'filled' ? 'white' : 'black',
   leading,
   trailing,
   buttonStyle,

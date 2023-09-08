@@ -2,24 +2,29 @@ import React from 'react';
 import {
   Switch as NativeSwitch,
   SwitchProps as NativeSwitchProps,
+  StyleProp,
   Text,
   View,
+  ViewStyle,
 } from 'react-native';
 
 export interface CustomSwitchProps extends NativeSwitchProps {
   label?: string;
   labelPosition?: 'leading' | 'trailing';
   style?: NativeSwitchProps['style'];
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 const CustomSwitch: React.FC<CustomSwitchProps> = ({
   label,
   labelPosition,
   style,
+  containerStyle,
   ...rest
 }) => {
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View
+      style={[{flexDirection: 'row', alignItems: 'center'}, containerStyle]}>
       {labelPosition === 'leading' && <Text>{label}</Text>}
       <NativeSwitch {...rest} />
       {labelPosition === 'trailing' && <Text>{label}</Text>}

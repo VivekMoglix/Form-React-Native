@@ -8,12 +8,11 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
-import PropTypes from 'prop-types';
 
 export interface CustomTextInputProps extends NativeInputProps {
   label?: string;
   variant?: 'standard' | 'outlined' | 'filled';
-  labelStyles?: any;
+  labelStyles?: StyleProp<TextStyle>;
   inputContainerStyles?: StyleProp<ViewStyle>;
   leading?: any;
   trailing?: any;
