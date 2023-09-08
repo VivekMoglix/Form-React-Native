@@ -48,7 +48,7 @@ export default function Form() {
         message="your custom message is here"
         timer={3000}
       />
-      <CustomSelectModal />
+      <CustomSelectModal multiple={false} label="Custom Select" />
     </View>
   );
 }

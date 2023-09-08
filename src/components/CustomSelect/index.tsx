@@ -5,11 +5,12 @@ import CustomSelectModal from './CustomSelectModal';
 const dummyArr = ['one', 'two', 'three', 'four'];
 
 export interface CustomSelectProps {
+  label?: string;
   multiple?: boolean;
   selectedValue?: any;
 }
 
-const CustomSelect: any = ({multiple = false}) => {
+const CustomSelect: any = ({multiple = false, label = 'Label'}) => {
   const [selectedValue, setSelectedValue] = useState(
     multiple === true ? ['one', 'two', 'three'] : 'one',
   );
@@ -33,7 +34,7 @@ const CustomSelect: any = ({multiple = false}) => {
   return (
     <>
       <View style={{marginTop: 20}}>
-        <Text style={{marginBottom: 5}}>Label</Text>
+        <Text style={{marginBottom: 5}}>{label}</Text>
         <TouchableOpacity
           style={{
             borderWidth: 1,
