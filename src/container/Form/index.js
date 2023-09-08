@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import CustomSwitch from '../../components/CustomSwitch';
 import CustomPopup from '../../components/CustomPopup';
 import CustomRadioButton from '../../components/CustomRadioButton';
+import CustomSelectModal from '../../components/CustomSelect';
 
 export default function Form() {
   const [isLoading, setIsLoading] = useState(false);
@@ -42,10 +43,12 @@ export default function Form() {
         onPress={() => setIsChecked(!isChecked)}
       />
       <CustomPopup
+        popupColor="error"
         position="bottom-right"
         message="your custom message is here"
-        timer={2000}
+        timer={3000}
       />
+      <CustomSelectModal />
     </View>
   );
 }

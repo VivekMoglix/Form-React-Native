@@ -17,7 +17,7 @@ export interface CustomPopupProps extends NativeViewProps {
   textStyle?: StyleProp<TextStyle>;
   message?: string;
   timer?: number;
-  popupColor?: string;
+  popupColor?: 'success' | 'error' | 'warning' | string;
   loaderColor?: string;
 }
 
@@ -26,9 +26,9 @@ const CustomPopup: React.FC<CustomPopupProps> = ({
   containerStyle,
   textStyle,
   message = 'message here yours',
-  timer = 2000,
-  loaderColor = 'red',
-  popupColor = 'blue',
+  timer = 3000,
+  loaderColor = '#5bc0de',
+  popupColor = 'error',
   ...rest
 }) => {
   const windowWidth = Dimensions.get('window').width;
@@ -56,6 +56,7 @@ const CustomPopup: React.FC<CustomPopupProps> = ({
       }),
     ]).start();
   }, [loadingAnim, slideInAnim]);
+
   return (
     <Animated.View
       {...rest}
@@ -66,7 +67,14 @@ const CustomPopup: React.FC<CustomPopupProps> = ({
           right: position.includes('right') ? slideInAnim : null,
           bottom: position.includes('bottom') ? 0 : null,
           left: position.includes('left') ? slideInAnim : null,
-          backgroundColor: popupColor,
+          backgroundColor:
+            popupColor === 'success'
+              ? '#22bb33'
+              : popupColor === 'error'
+              ? '#bb2124'
+              : popupColor === 'warning'
+              ? '#f0ad4e'
+              : popupColor,
           borderRadius: 8,
           overflow: 'hidden',
         },

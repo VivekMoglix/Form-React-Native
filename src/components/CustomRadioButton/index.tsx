@@ -1,11 +1,11 @@
 import React from 'react';
+import Icon from 'react-native-vector-icons/dist/Entypo';
 import {
   TouchableOpacity as NativeTouchableOpacity,
   TouchableOpacityProps as NativeTouchableOpacityprops,
   Text,
   View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/dist/Entypo';
 
 export interface CustomRadioButtonProps extends NativeTouchableOpacityprops {
   isChecked?: boolean;
@@ -30,7 +30,7 @@ const CustomRadioButton: React.FC<CustomRadioButtonProps> = ({
   return (
     <View
       style={{
-        marginTop: 'auto',
+        marginTop: 20,
         flexDirection:
           labelPosition === 'left' || labelPosition === 'right'
             ? 'row'
