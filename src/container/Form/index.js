@@ -1,6 +1,6 @@
 import {View} from 'react-native';
 import CustomTextInput from '../../components/TextInput';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CustomButton from '../../components/CustomButton';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import CustomSwitch from '../../components/CustomSwitch';
@@ -8,10 +8,17 @@ import CustomPopup from '../../components/CustomPopup';
 import CustomRadioButton from '../../components/CustomRadioButton';
 import CustomSelectModal from '../../components/CustomSelect';
 
+const dummyArr = ['one', 'two', 'three', 'four'];
+
 export default function Form() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSwitchActive, setIsSwitchActive] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [selectedValue, setSelectedValue] = useState('');
+
+  useEffect(() => {
+    console.log(selectedValue, 'VALUE');
+  }, [selectedValue]);
   return (
     <View style={{flex: 1}}>
       <CustomTextInput
@@ -48,7 +55,15 @@ export default function Form() {
         message="your custom message is here"
         timer={3000}
       />
-      <CustomSelectModal multiple={false} label="Custom Select" />
+      <CustomSelectModal
+        multiple={false}
+        label="Custom Select"
+        data={dummyArr}
+        onSelectItem={(selectedItem, index) => {
+          setSelectedValue(selectedItem);
+          console.log(selectedItem, index, 'SAJDBSAD');
+        }}
+      />
     </View>
   );
 }

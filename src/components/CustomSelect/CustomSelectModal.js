@@ -4,7 +4,10 @@ const CustomSelectModal = ({
   isModalVisible,
   values,
   selectedValue,
-  onChangeValue,
+  setSelectedValue,
+  onSelectItem,
+  setIsModalVisible,
+  multiple,
 }) => {
   return (
     <View
@@ -35,7 +38,24 @@ const CustomSelectModal = ({
                     ? 'red'
                     : '#979797',
                 }}
-                onPress={() => onChangeValue(value)}>
+                onPress={() => {
+                  if (multiple === true) {
+                    if (selectedValue.includes(value)) {
+                      const newArr = selectedValue.filter(el => el != value);
+                      setSelectedValue([...newArr]);
+                      onSelectItem([...newArr], index);
+                    } else {
+                      const newArr = [...selectedValue, value];
+                      console.log('New Arr', newArr);
+                      setSelectedValue([...newArr]);
+                      onSelectItem([...newArr], index);
+                    }
+                  } else {
+                    setSelectedValue(value);
+                    onSelectItem(value, index);
+                  }
+                  setIsModalVisible(false);
+                }}>
                 <Text
                   style={{
                     color: selectedValue.includes(value) ? 'red' : '#979797',

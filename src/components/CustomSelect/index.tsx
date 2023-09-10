@@ -2,34 +2,22 @@ import React, {useState} from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
 import CustomSelectModal from './CustomSelectModal';
 
-const dummyArr = ['one', 'two', 'three', 'four'];
-
 export interface CustomSelectProps {
+  data?: [];
   label?: string;
   multiple?: boolean;
   selectedValue?: any;
+  onSelectItem?: any;
 }
 
-const CustomSelect: any = ({multiple = false, label = 'Label'}) => {
-  const [selectedValue, setSelectedValue] = useState(
-    multiple === true ? ['one', 'two', 'three'] : 'one',
-  );
+const CustomSelect: any = ({
+  multiple = false,
+  label = 'Label',
+  data = [],
+  onSelectItem = null,
+}) => {
+  const [selectedValue, setSelectedValue] = useState(!multiple ? '' : []);
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const onChangeValue = (value: any) => {
-    if (multiple === true) {
-      let arr = [...selectedValue];
-      let newArr = [...arr, value];
-      if (selectedValue.includes(value)) {
-        newArr = newArr.filter(el => el != value);
-      }
-      console.log(newArr);
-      setSelectedValue([...newArr]);
-    } else {
-      setSelectedValue(value);
-    }
-    setIsModalVisible(false);
-  };
 
   return (
     <>
@@ -48,10 +36,13 @@ const CustomSelect: any = ({multiple = false, label = 'Label'}) => {
       </View>
       {isModalVisible && (
         <CustomSelectModal
+          multiple={multiple}
           selectedValue={selectedValue}
+          setSelectedValue={setSelectedValue}
           isModalVisible={isModalVisible}
-          onChangeValue={onChangeValue}
-          values={dummyArr}
+          values={data}
+          onSelectItem={onSelectItem}
+          setIsModalVisible={setIsModalVisible}
         />
       )}
     </>
