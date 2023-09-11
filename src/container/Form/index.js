@@ -8,7 +8,18 @@ import CustomPopup from '../../components/CustomPopup';
 import CustomRadioButton from '../../components/CustomRadioButton';
 import CustomSelectModal from '../../components/CustomSelect';
 
-const dummyArr = ['one', 'two', 'three', 'four'];
+const dummyArr = [
+  'one',
+  'two',
+  'three',
+  'four',
+  'five',
+  'six',
+  'seven',
+  'eight',
+  'nine',
+  'ten',
+];
 
 export default function Form() {
   const [isLoading, setIsLoading] = useState(false);
@@ -16,9 +27,6 @@ export default function Form() {
   const [isChecked, setIsChecked] = useState(false);
   const [selectedValue, setSelectedValue] = useState('');
 
-  useEffect(() => {
-    console.log(selectedValue, 'VALUE');
-  }, [selectedValue]);
   return (
     <View style={{flex: 1}}>
       <CustomTextInput
@@ -61,7 +69,6 @@ export default function Form() {
         data={dummyArr}
         onSelectItem={(selectedItem, index) => {
           setSelectedValue(selectedItem);
-          console.log(selectedItem, index, 'SAJDBSAD');
         }}
       />
     </View>
