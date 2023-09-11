@@ -7,6 +7,7 @@ import CustomSwitch from '../../components/CustomSwitch';
 import CustomPopup from '../../components/CustomPopup';
 import CustomRadioButton from '../../components/CustomRadioButton';
 import CustomSelectModal from '../../components/CustomSelect';
+import {colors} from '../../constants/colors';
 
 const dummyArr = [
   'one',
@@ -29,29 +30,17 @@ export default function Form() {
 
   return (
     <View style={{flex: 1}}>
-      <CustomTextInput
-        label="My Input"
-        variant="standard"
-        inputContainerStyles={{marginBottom: 30}}
-        leading={props => <Icon name={'account-circle'} size={24} {...props} />}
-      />
-      <CustomButton
-        variant="filled"
-        withLoader={true}
-        isLoading={isLoading}
-        onPress={() => setIsLoading(!isLoading)}
-        trailing={props => (
-          <Icon name={'account-circle'} size={24} {...props} />
-        )}
-      />
+      <CustomTextInput inputContainerStyles={{marginBottom: 30}} />
+      <CustomButton />
       <CustomSwitch
         containerStyle={{marginTop: 20}}
         value={isSwitchActive}
-        thumbColor={isSwitchActive ? 'red' : 'blue'}
-        trackColor={{false: 'red', true: 'green'}}
+        thumbColor={
+          isSwitchActive
+            ? colors.SELECTED_OPTION_COLOR
+            : colors.UNSELECTED_OPTION_COLOR
+        }
         onValueChange={() => setIsSwitchActive(!isSwitchActive)}
-        label={'Switch'}
-        labelPosition={'leading'}
       />
       <CustomRadioButton
         isChecked={isChecked}
@@ -71,11 +60,6 @@ export default function Form() {
           setSelectedValue(selectedItem);
         }}
       />
-      <TouchableOpacity
-        style={{marginTop: 20, borderWidth: 1}}
-        onPress={() => console.log(selectedValue, 'asdnsad')}>
-        <Text>Click to get Value</Text>
-      </TouchableOpacity>
     </View>
   );
 }

@@ -6,6 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import {colors} from '../../constants/colors';
 
 export interface CustomRadioButtonProps extends NativeTouchableOpacityprops {
   isChecked?: boolean;
@@ -20,8 +21,8 @@ export interface CustomRadioButtonProps extends NativeTouchableOpacityprops {
 const CustomRadioButton: React.FC<CustomRadioButtonProps> = ({
   isChecked = false,
   label = 'Label',
-  uncheckedColor = '#979797',
-  checkedColor = 'red',
+  uncheckedColor = colors.DEFAULT_BUTTON_DARK_GRAY,
+  checkedColor = colors.SELECTED_OPTION_COLOR,
   labelPosition = 'left',
   radioButtonShape = 'square',
   radioButtonType = 'color',
@@ -56,7 +57,7 @@ const CustomRadioButton: React.FC<CustomRadioButtonProps> = ({
               width: 18,
               height: 18,
               borderRadius: 5,
-              backgroundColor: 'red',
+              backgroundColor: checkedColor,
             }}
           />
         )}

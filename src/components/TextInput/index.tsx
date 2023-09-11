@@ -8,6 +8,7 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
+import {colors} from '../../constants/colors';
 
 export interface CustomTextInputProps extends NativeInputProps {
   label?: string;
@@ -22,8 +23,9 @@ export interface CustomTextInputProps extends NativeInputProps {
 
 const CustomTextInput: React.FC<CustomTextInputProps> = ({
   label = 'Input',
-  labelStyles,
-  variant = 'standard',
+  labelStyles = {color: colors.DEFAULT_TEXT_LIGHT_GRAY},
+  placeholderTextColor = '#C6C7CC',
+  variant = 'outlined',
   backgroundColor = '#fff',
   inputContainerStyles,
   leading,
@@ -41,7 +43,9 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
             alignItems: 'center',
             paddingHorizontal: 4,
             paddingVertical: 4,
-            borderRadius: variant === 'filled' ? 4 : 0,
+            borderColor: colors.DEFAULT_BUTTON_DARK_GRAY,
+            borderRadius:
+              variant === 'filled' || variant === 'outlined' ? 4 : 0,
             backgroundColor:
               variant === 'filled' ? backgroundColor : 'transparent',
             marginTop: 5,

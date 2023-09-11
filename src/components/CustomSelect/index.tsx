@@ -4,6 +4,7 @@ import {Text, View, TouchableOpacity, Animated, Dimensions} from 'react-native';
 import CustomSelectDropdown from './CustomSelectDropdown';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import {ScrollView} from 'react-native-gesture-handler';
+import {colors} from '../../constants/colors';
 
 export interface CustomSelectProps {
   data?: [];
@@ -38,22 +39,27 @@ const CustomSelect: any = ({
           style={{
             flexDirection: 'row',
             borderWidth: 1,
-            borderColor: '#979797',
+            borderColor: colors.DEFAULT_BUTTON_DARK_GRAY,
             paddingHorizontal: 8,
             paddingVertical: 4,
+            borderRadius: 4,
           }}
           onPress={() => setIsDropdownVisible(!isDropdownVisible)}>
           {multiple === true ? (
             selectedValue &&
             selectedValue.map((value, index) => {
               return (
-                <Text key={value + index}>{`${value}${
+                <Text
+                  style={{color: colors.SELECTED_OPTION_COLOR}}
+                  key={value + index}>{`${value}${
                   index !== selectedValue.length - 1 ? ', ' : ''
                 }`}</Text>
               );
             })
           ) : (
-            <Text>{selectedValue}</Text>
+            <Text style={{color: colors.SELECTED_OPTION_COLOR}}>
+              {selectedValue}
+            </Text>
           )}
           {isDropdownVisible ? (
             <Icon
@@ -74,7 +80,7 @@ const CustomSelect: any = ({
             showsVerticalScrollIndicator={false}
             style={{
               height: calculateDropdownHeight(),
-              backgroundColor: 'white',
+              backgroundColor: colors.APP_BACKGROUND_COLOR,
               width: '100%',
               position: 'absolute',
               top: 30,

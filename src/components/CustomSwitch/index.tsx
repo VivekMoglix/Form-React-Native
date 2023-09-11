@@ -7,6 +7,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import {colors} from '../../constants/colors';
 
 export interface CustomSwitchProps extends NativeSwitchProps {
   label?: string;
@@ -16,8 +17,8 @@ export interface CustomSwitchProps extends NativeSwitchProps {
 }
 
 const CustomSwitch: React.FC<CustomSwitchProps> = ({
-  label,
-  labelPosition,
+  label = 'Switch',
+  labelPosition = 'leading',
   style,
   containerStyle,
   ...rest
@@ -26,7 +27,13 @@ const CustomSwitch: React.FC<CustomSwitchProps> = ({
     <View
       style={[{flexDirection: 'row', alignItems: 'center'}, containerStyle]}>
       {labelPosition === 'leading' && <Text>{label}</Text>}
-      <NativeSwitch {...rest} />
+      <NativeSwitch
+        {...rest}
+        trackColor={{
+          false: colors.DEFAULT_BUTTON_DARK_GRAY,
+          true: colors.DEFAULT_BUTTON_DARK_GRAY,
+        }}
+      />
       {labelPosition === 'trailing' && <Text>{label}</Text>}
     </View>
   );

@@ -9,6 +9,7 @@ import {
   TextStyle,
   ViewStyle,
 } from 'react-native';
+import {colors} from '../../constants/colors';
 
 export interface CustomButtonProps extends NativeTouchableProps {
   label?: string;
@@ -29,13 +30,13 @@ export interface CustomButtonProps extends NativeTouchableProps {
 const CustomButton: React.FC<CustomButtonProps> = ({
   label = 'Button',
   withLoader = false,
-  variant = 'outlined',
+  variant = 'filled',
   size = 'small',
   loaderSize = 'small',
   isLoading,
   textStyles,
   loaderPosition = 'leading',
-  backgroundColor = 'blue',
+  backgroundColor = colors.DEFAULT_BUTTON_DARK_GRAY,
   loaderColor = variant === 'filled' ? 'white' : 'black',
   leading,
   trailing,
