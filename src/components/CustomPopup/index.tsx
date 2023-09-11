@@ -9,6 +9,7 @@ import {
   Easing,
   Dimensions,
 } from 'react-native';
+import {colors} from '../../constants/colors';
 // import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 
 export interface CustomPopupProps extends NativeViewProps {
@@ -27,8 +28,8 @@ const CustomPopup: React.FC<CustomPopupProps> = ({
   textStyle,
   message = 'message here yours',
   timer = 3000,
-  loaderColor = '#5bc0de',
-  popupColor = 'error',
+  loaderColor = colors.SELECTED_OPTION_COLOR,
+  popupColor = colors.DEFAULT_BUTTON_DARK_GRAY,
   ...rest
 }) => {
   const windowWidth = Dimensions.get('window').width;
@@ -39,7 +40,7 @@ const CustomPopup: React.FC<CustomPopupProps> = ({
       Animated.timing(slideInAnim, {
         toValue: 0,
         duration: 1500,
-        easing: Easing.bounce,
+        easing: Easing.linear,
         useNativeDriver: false,
       }),
       Animated.timing(loadingAnim, {
@@ -51,7 +52,7 @@ const CustomPopup: React.FC<CustomPopupProps> = ({
       Animated.timing(slideInAnim, {
         toValue: -windowWidth,
         duration: 1500,
-        easing: Easing.bounce,
+        easing: Easing.linear,
         useNativeDriver: false,
       }),
     ]).start();

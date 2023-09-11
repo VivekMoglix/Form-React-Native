@@ -20,6 +20,7 @@ const CustomSelect: any = ({
   data = [],
   onSelectItem = null,
 }) => {
+  const [dropdownPosition, setDropdownPosition] = useState(0);
   const [selectedValue, setSelectedValue] = useState(!multiple ? '' : []);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -31,6 +32,20 @@ const CustomSelect: any = ({
     return data.length <= 7 ? 36.5 * data.length : height * 0.3;
   };
 
+  useEffect(() => {
+    isDropdownVisible
+      ? Animated.timing(dropdownAnim, {
+          toValue: calculateDropdownHeight(),
+          duration: 1000,
+          useNativeDriver: false,
+        }).start()
+      : Animated.timing(dropdownAnim, {
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: false,
+        }).start();
+  }, [isDropdownVisible]);
+
   return (
     <View style={{marginTop: 20}}>
       <Text style={{marginBottom: 5}}>{label}</Text>
@@ -40,9 +55,12 @@ const CustomSelect: any = ({
             flexDirection: 'row',
             borderWidth: 1,
             borderColor: colors.DEFAULT_BUTTON_DARK_GRAY,
-            paddingHorizontal: 8,
-            paddingVertical: 4,
+            padding: 12,
             borderRadius: 4,
+          }}
+          onLayout={event => {
+            const {height} = event.nativeEvent.layout;
+            setDropdownPosition(height);
           }}
           onPress={() => setIsDropdownVisible(!isDropdownVisible)}>
           {multiple === true ? (
@@ -76,14 +94,14 @@ const CustomSelect: any = ({
           )}
         </TouchableOpacity>
         {isDropdownVisible && (
-          <ScrollView
+          <Animated.ScrollView
             showsVerticalScrollIndicator={false}
             style={{
-              height: calculateDropdownHeight(),
+              height: dropdownAnim,
               backgroundColor: colors.APP_BACKGROUND_COLOR,
               width: '100%',
               position: 'absolute',
-              top: 30,
+              top: dropdownPosition && dropdownPosition,
               flex: 1,
               zIndex: 999,
             }}>
@@ -96,7 +114,7 @@ const CustomSelect: any = ({
               setIsDropdownVisible={setIsDropdownVisible}
               multiple={multiple}
             />
-          </ScrollView>
+          </Animated.ScrollView>
         )}
       </View>
     </View>

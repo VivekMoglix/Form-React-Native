@@ -47,7 +47,6 @@ export default function Form() {
         onPress={() => setIsChecked(!isChecked)}
       />
       <CustomPopup
-        popupColor="error"
         position="bottom-right"
         message="your custom message is here"
         timer={3000}
