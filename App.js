@@ -7,7 +7,7 @@ export default function App() {
       style={{
         padding: 15,
         flex: 1,
-        backgroundColor: 'rgb(237, 240, 242)',
+        backgroundColor: '#fff',
       }}>
       <Form />
     </GestureHandlerRootView>

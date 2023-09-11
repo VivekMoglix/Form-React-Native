@@ -1,5 +1,8 @@
 import {Modal, Text, TouchableOpacity, View} from 'react-native';
 import {colors} from '../../constants/colors';
+import CustomTextInput from '../TextInput';
+import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+import React, {useEffect, useMemo, useState} from 'react';
 
 const CustomSelectDropdown = ({
   values,
@@ -9,11 +12,28 @@ const CustomSelectDropdown = ({
   multiple,
   isDropdownVisible,
   setIsDropdownVisible,
+  withSearch,
 }) => {
+  const [searchText, setSearchText] = useState('');
+
+  const filteredData = useMemo(() => {
+    return values.filter(v =>
+      v.toLowerCase().includes(searchText.toLowerCase().trim()),
+    );
+  }, [searchText]);
+
   return (
     <View style={{flex: 1}}>
-      {values &&
-        values.map((value, index) => {
+      {withSearch && (
+        <CustomTextInput
+          withLabel={false}
+          value={searchText}
+          leading={props => <Icon name="search" size={18} {...props} />}
+          onChangeText={setSearchText}
+        />
+      )}
+      {filteredData &&
+        filteredData.map((value, index) => {
           return (
             <TouchableOpacity
               key={value + index}

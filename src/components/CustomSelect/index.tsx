@@ -1,28 +1,42 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {Text, View, TouchableOpacity, Animated, Dimensions} from 'react-native';
-// import CustomSelectModal from './CustomSelectModal';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Animated,
+  Dimensions,
+  StyleProp,
+  ViewProps,
+  TouchableOpacityProps,
+} from 'react-native';
 import CustomSelectDropdown from './CustomSelectDropdown';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
-import {ScrollView} from 'react-native-gesture-handler';
 import {colors} from '../../constants/colors';
 
 export interface CustomSelectProps {
   data?: [];
   label?: string;
+  withSearch?: boolean;
   multiple?: boolean;
   selectedValue?: any;
   onSelectItem?: any;
+  containerStyles?: StyleProp<ViewProps>;
+  customSelectStyles?: StyleProp<ViewProps>;
+  dropdownIconSize?: number;
 }
 
-const CustomSelect: any = ({
+const CustomSelect: React.FC<CustomSelectProps> = ({
   multiple = false,
   label = 'Label',
+  withSearch = false,
   data = [],
   onSelectItem = null,
+  containerStyles = {},
+  customSelectStyles = {},
+  dropdownIconSize = 18,
 }) => {
   const [dropdownPosition, setDropdownPosition] = useState(0);
   const [selectedValue, setSelectedValue] = useState(!multiple ? '' : []);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   const dropdownAnim = useRef(new Animated.Value(0)).current;
@@ -36,28 +50,31 @@ const CustomSelect: any = ({
     isDropdownVisible
       ? Animated.timing(dropdownAnim, {
           toValue: calculateDropdownHeight(),
-          duration: 1000,
+          duration: 250,
           useNativeDriver: false,
         }).start()
       : Animated.timing(dropdownAnim, {
           toValue: 0,
-          duration: 500,
+          duration: 0,
           useNativeDriver: false,
         }).start();
   }, [isDropdownVisible]);
 
   return (
-    <View style={{marginTop: 20}}>
+    <View style={containerStyles}>
       <Text style={{marginBottom: 5}}>{label}</Text>
       <View style={{position: 'relative'}}>
         <TouchableOpacity
-          style={{
-            flexDirection: 'row',
-            borderWidth: 1,
-            borderColor: colors.DEFAULT_BUTTON_DARK_GRAY,
-            padding: 12,
-            borderRadius: 4,
-          }}
+          style={[
+            {
+              flexDirection: 'row',
+              borderWidth: 1,
+              borderColor: colors.DEFAULT_BUTTON_DARK_GRAY,
+              padding: 12,
+              borderRadius: 4,
+            },
+            customSelectStyles,
+          ]}
           onLayout={event => {
             const {height} = event.nativeEvent.layout;
             setDropdownPosition(height);
@@ -83,13 +100,13 @@ const CustomSelect: any = ({
             <Icon
               style={{marginLeft: 'auto'}}
               name="keyboard-arrow-up"
-              size={18}
+              size={dropdownIconSize}
             />
           ) : (
             <Icon
               style={{marginLeft: 'auto'}}
               name="keyboard-arrow-down"
-              size={18}
+              size={dropdownIconSize}
             />
           )}
         </TouchableOpacity>
@@ -98,7 +115,7 @@ const CustomSelect: any = ({
             showsVerticalScrollIndicator={false}
             style={{
               height: dropdownAnim,
-              backgroundColor: colors.APP_BACKGROUND_COLOR,
+              backgroundColor: '#e1e1e1',
               width: '100%',
               position: 'absolute',
               top: dropdownPosition && dropdownPosition,
@@ -113,6 +130,7 @@ const CustomSelect: any = ({
               isDropdownVisible={isDropdownVisible}
               setIsDropdownVisible={setIsDropdownVisible}
               multiple={multiple}
+              withSearch={withSearch}
             />
           </Animated.ScrollView>
         )}

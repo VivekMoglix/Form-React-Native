@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import {
   Text,
   TextInput as NativeInput,
@@ -11,6 +11,7 @@ import {
 import {colors} from '../../constants/colors';
 
 export interface CustomTextInputProps extends NativeInputProps {
+  withLabel?: boolean;
   label?: string;
   variant?: 'standard' | 'outlined' | 'filled';
   labelStyles?: StyleProp<TextStyle>;
@@ -19,11 +20,13 @@ export interface CustomTextInputProps extends NativeInputProps {
   trailing?: any;
   textStyles?: StyleProp<TextStyle>;
   backgroundColor?: string;
+  placeholder?: string;
 }
 
 const CustomTextInput: React.FC<CustomTextInputProps> = ({
   label = 'Input',
   labelStyles = {color: colors.DEFAULT_TEXT_LIGHT_GRAY},
+  placeholder,
   placeholderTextColor = '#C6C7CC',
   variant = 'outlined',
   backgroundColor = '#fff',
@@ -33,9 +36,39 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
   textStyles,
   ...rest
 }) => {
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    const {value} = {...rest};
+    if (value && value.length > 0) {
+      return;
+    } else {
+      setIsFocused(false);
+    }
+  };
+
   return (
-    <View>
-      <Text style={labelStyles}>{label}</Text>
+    <View style={{position: 'relative'}}>
+      <Text
+        style={[
+          labelStyles,
+          {
+            position: 'absolute',
+            top: isFocused ? -5 : 12,
+            left: leading ? 30 : 10,
+            backgroundColor: isFocused ? '#fff' : 'transparent',
+            zIndex: 2,
+            paddingLeft: 4,
+            paddingRight: 8,
+          },
+        ]}>
+        {label}
+      </Text>
+
       <View
         style={[
           {
@@ -57,6 +90,8 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
         ]}>
         {leading && <View>{leading()}</View>}
         <NativeInput
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           {...rest}
           style={[
             {flex: 2, paddingVertical: 0, paddingHorizontal: 4},
