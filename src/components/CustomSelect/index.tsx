@@ -79,6 +79,7 @@ const CustomSelect: any = ({
               position: 'absolute',
               top: 30,
               flex: 1,
+              zIndex: 999,
             }}>
             <CustomSelectDropdown
               values={data}

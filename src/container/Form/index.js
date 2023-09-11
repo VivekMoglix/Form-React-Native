@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import CustomTextInput from '../../components/TextInput';
 import React, {useEffect, useState} from 'react';
 import CustomButton from '../../components/CustomButton';
@@ -71,6 +71,11 @@ export default function Form() {
           setSelectedValue(selectedItem);
         }}
       />
+      <TouchableOpacity
+        style={{marginTop: 20, borderWidth: 1}}
+        onPress={() => console.log(selectedValue, 'asdnsad')}>
+        <Text>Click to get Value</Text>
+      </TouchableOpacity>
     </View>
   );
 }
