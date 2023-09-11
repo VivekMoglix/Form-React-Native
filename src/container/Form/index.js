@@ -66,9 +66,6 @@ export default function Form() {
           setSelectedValue(selectedItem);
         }}
       />
-      <TouchableOpacity onPress={() => console.log(textValue, 'asodbsaiud')}>
-        <Text>UIASD</Text>
-      </TouchableOpacity>
     </View>
   );
 }
