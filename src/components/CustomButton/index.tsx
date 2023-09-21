@@ -15,7 +15,7 @@ export interface CustomButtonProps extends NativeTouchableProps {
   label?: string;
   withLoader?: boolean;
   variant?: 'outlined' | 'filled';
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'full';
   loaderSize?: 'small' | 'large';
   isLoading?: boolean;
   textStyles: StyleProp<TextStyle>;
@@ -53,14 +53,14 @@ const CustomButton: React.FC<CustomButtonProps> = ({
               ? 150
               : size === 'medium'
               ? 250
-              : size === 'large'
+              : size === 'full'
               ? '100%'
               : null,
           alignItems: 'center',
           justifyContent: 'center',
           marginBottom: 5,
           borderWidth: variant === 'outlined' ? 1 : 0,
-          padding: 4,
+          padding: 8,
           flexDirection: 'row',
           borderRadius: 4,
           backgroundColor:

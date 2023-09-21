@@ -7,10 +7,8 @@ import React, {useEffect, useMemo, useState} from 'react';
 const CustomSelectDropdown = ({
   values,
   selectedValue,
-  setSelectedValue,
   onSelectItem,
   multiple,
-  isDropdownVisible,
   setIsDropdownVisible,
   withSearch,
 }) => {
@@ -41,16 +39,15 @@ const CustomSelectDropdown = ({
                 if (multiple === true) {
                   if (selectedValue.includes(value)) {
                     const newArr = selectedValue.filter(el => el != value);
-                    setSelectedValue([...newArr]);
-                    onSelectItem([...newArr], index);
+
+                    onSelectItem && onSelectItem([...newArr], index);
                   } else {
                     const newArr = [...selectedValue, value];
-                    setSelectedValue([...newArr]);
-                    onSelectItem([...newArr], index);
+
+                    onSelectItem && onSelectItem([...newArr], index);
                   }
                 } else {
-                  setSelectedValue(value);
-                  onSelectItem(value, index);
+                  onSelectItem && onSelectItem(value, index);
                 }
                 setIsDropdownVisible(false);
               }}

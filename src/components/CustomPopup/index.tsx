@@ -10,7 +10,6 @@ import {
   Dimensions,
 } from 'react-native';
 import {colors} from '../../constants/colors';
-// import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 
 export interface CustomPopupProps extends NativeViewProps {
   position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
@@ -26,7 +25,7 @@ const CustomPopup: React.FC<CustomPopupProps> = ({
   position = 'bottom-right',
   containerStyle,
   textStyle,
-  message = 'message here yours',
+  message = 'your message here',
   timer = 3000,
   loaderColor = colors.SELECTED_OPTION_COLOR,
   popupColor = colors.DEFAULT_BUTTON_DARK_GRAY,

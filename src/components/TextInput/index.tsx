@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   TextInput as NativeInput,
@@ -8,100 +8,157 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
-import {colors} from '../../constants/colors';
+import DefaultAppColors from '../../constants/colors';
+import Dimension from '../../constants/dimensions';
 
-export interface CustomTextInputProps extends NativeInputProps {
+export interface TextInputProps extends NativeInputProps {
   withLabel?: boolean;
   label?: string;
-  variant?: 'standard' | 'outlined' | 'filled';
+  variant?: 'standard' | 'outlined';
   labelStyles?: StyleProp<TextStyle>;
-  inputContainerStyles?: StyleProp<ViewStyle>;
-  leading?: any;
-  trailing?: any;
+  containerStyles?: StyleProp<ViewStyle>;
+  leading?:
+    | React.ReactNode
+    | ((props: {color: string; size: number}) => React.ReactNode | null)
+    | null;
+  trailing?:
+    | React.ReactNode
+    | ((props: {color: string; size: number}) => React.ReactNode | null)
+    | null;
   textStyles?: StyleProp<TextStyle>;
   backgroundColor?: string;
   placeholder?: string;
+  focusColor?: string;
 }
 
-const CustomTextInput: React.FC<CustomTextInputProps> = ({
+const TextInput: React.FC<TextInputProps> = ({
+  withLabel = true,
   label = 'Input',
-  labelStyles = {color: colors.DEFAULT_TEXT_LIGHT_GRAY},
+  labelStyles,
   placeholder,
   placeholderTextColor = '#C6C7CC',
   variant = 'outlined',
   backgroundColor = '#fff',
-  inputContainerStyles,
+  containerStyles,
   leading,
   trailing,
   textStyles,
+  focusColor = DefaultAppColors.lightGrayText,
   ...rest
 }) => {
   const [isFocused, setIsFocused] = useState(false);
+  const [labelActive, setLabelActive] = useState(false);
+  const props = {...rest};
+  let {value} = props;
+
+  const leadingNode =
+    typeof leading === 'function'
+      ? leading({color: '#f00', size: 24})
+      : leading;
+
+  const trailingNode =
+    typeof trailing === 'function'
+      ? trailing({
+          color: '#f00',
+          size: 24,
+        })
+      : trailing;
+
+  useEffect(() => {
+    if (value && value?.length > 0) {
+      setLabelActive(true);
+    }
+  }, []);
 
   const handleFocus = () => {
+    setLabelActive(true);
     setIsFocused(true);
   };
 
   const handleBlur = () => {
-    const {value} = {...rest};
-    if (value && value.length > 0) {
-      return;
-    } else {
-      setIsFocused(false);
+    setIsFocused(false);
+    if (!value) {
+      setLabelActive(false);
     }
   };
 
   return (
-    <View style={{position: 'relative'}}>
-      <Text
-        style={[
-          labelStyles,
-          {
+    <View
+      style={[
+        {
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingLeft: 6,
+          paddingVertical: 8,
+          borderRadius: variant === 'outlined' ? 8 : 0,
+          backgroundColor: 'transparent',
+          borderWidth: variant === 'outlined' ? 1 : 0,
+          borderBottomWidth:
+            variant === 'standard' ? 1 : variant === 'outlined' ? 1 : 0,
+          paddingRight: trailing ? 12 : 8,
+          borderColor: isFocused ? focusColor : DefaultAppColors.gray2,
+          width: '100%',
+          marginTop: Dimension.margin20,
+          height: Dimension.height40,
+          marginRight: Dimension.margin10,
+        },
+        containerStyles,
+      ]}>
+      {withLabel && (
+        <View
+          pointerEvents="none"
+          style={{
+            backgroundColor: labelActive ? backgroundColor : 'transparent',
             position: 'absolute',
-            top: isFocused ? -5 : 12,
-            left: leading ? 30 : 10,
-            backgroundColor: isFocused ? '#fff' : 'transparent',
+            top:
+              variant === 'standard'
+                ? labelActive
+                  ? -8
+                  : 15
+                : labelActive
+                ? -12
+                : 14,
+            left: leading ? 26 : 12,
             zIndex: 2,
             paddingLeft: 4,
             paddingRight: 8,
-          },
-        ]}>
-        {label}
-      </Text>
-
-      <View
+            paddingBottom: 0,
+          }}>
+          <Text
+            style={[
+              {
+                fontFamily: Dimension.CustomSemiBoldFont,
+                fontSize: Dimension.font12,
+                color: '#6F6F6F',
+              },
+              labelStyles,
+            ]}>
+            {label}
+          </Text>
+        </View>
+      )}
+      {leadingNode && <View>{leadingNode}</View>}
+      <NativeInput
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        {...rest}
         style={[
           {
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingHorizontal: 4,
-            paddingVertical: 4,
-            borderColor: colors.DEFAULT_BUTTON_DARK_GRAY,
-            borderRadius:
-              variant === 'filled' || variant === 'outlined' ? 4 : 0,
-            backgroundColor:
-              variant === 'filled' ? backgroundColor : 'transparent',
-            marginTop: 5,
-            borderWidth: variant === 'outlined' ? 1 : 0,
-            borderBottomWidth:
-              variant === 'standard' ? 1 : variant === 'outlined' ? 1 : 0,
+            flex: 2,
+            paddingVertical: 0,
+            paddingHorizontal: 10,
+            fontFamily: Dimension.CustomRegularFont,
+            fontSize: Dimension.font12,
+            textAlignVertical: 'center',
+            color: DefaultAppColors.PrimaryTextColor,
           },
-          inputContainerStyles,
-        ]}>
-        {leading && <View>{leading()}</View>}
-        <NativeInput
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          {...rest}
-          style={[
-            {flex: 2, paddingVertical: 0, paddingHorizontal: 4},
-            textStyles,
-          ]}
-        />
-        {trailing && <View style={{marginLeft: 'auto'}}>{trailing()}</View>}
-      </View>
+          textStyles,
+        ]}
+        placeholder={isFocused ? placeholder : ''}
+      />
+      {trailingNode && <View style={{marginLeft: 'auto'}}>{trailingNode}</View>}
     </View>
   );
 };
 
-export default CustomTextInput;
+export default TextInput;

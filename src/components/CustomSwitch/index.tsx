@@ -6,57 +6,40 @@ import {
   Text,
   View,
   ViewStyle,
+  TextStyle,
 } from 'react-native';
 import {colors} from '../../constants/colors';
 
-export interface CustomSwitchProps extends NativeSwitchProps {
+export interface SwitchProps extends NativeSwitchProps {
   label?: string;
   labelPosition?: 'leading' | 'trailing';
   style?: NativeSwitchProps['style'];
-  containerStyle?: StyleProp<ViewStyle>;
+  containerStyles?: StyleProp<ViewStyle>;
+  trackColor?:
+    | {
+        false?: string | null | undefined;
+        true?: string | null | undefined;
+      }
+    | undefined;
 }
 
-const CustomSwitch: React.FC<CustomSwitchProps> = ({
+const Switch: React.FC<SwitchProps> = ({
   label = 'Switch',
   labelPosition = 'leading',
   style,
-  containerStyle,
+  containerStyles,
+  trackColor = {false: colors.buttonDarkGray, true: colors.buttonDarkGray},
+  labelStyles,
   ...rest
 }) => {
   return (
     <View
-      style={[{flexDirection: 'row', alignItems: 'center'}, containerStyle]}>
-      {labelPosition === 'leading' && <Text>{label}</Text>}
-      <NativeSwitch
-        {...rest}
-        trackColor={{
-          false: colors.DEFAULT_BUTTON_DARK_GRAY,
-          true: colors.DEFAULT_BUTTON_DARK_GRAY,
-        }}
-      />
-      {labelPosition === 'trailing' && <Text>{label}</Text>}
+      style={[{flexDirection: 'row', alignItems: 'center'}, containerStyles]}>
+      {labelPosition === 'leading' && <Text style={labelStyles}>{label}</Text>}
+      <NativeSwitch {...rest} trackColor={trackColor} />
+      {labelPosition === 'trailing' && <Text style={labelStyles}>{label}</Text>}
     </View>
   );
 };
 
-export default CustomSwitch;
-
-// CustomSwitch.propTypes = {
-//   value: PropTypes.bool,
-//   onValueChange: PropTypes.func,
-//   ios_backgroundColor: PropTypes.string,
-//   thumbColor: PropTypes.string,
-//   trackColor: PropTypes.object,
-//   disabled: PropTypes.bool,
-//   onChange: PropTypes.func,
-//   label: PropTypes.string,
-//   labelPosition: PropTypes.string,
-//   style: PropTypes.object,
-//   size: PropTypes.oneOf(['small', 'medium']),
-// };
-// CustomSwitch.defaultProps = {
-//   thumbColor: '#767577',
-//   trackColor: {false: '#767577', true: '#81b0ff'},
-//   disabled: false,
-//   size: 'small',
-// };
+export default Switch;

@@ -49,6 +49,7 @@ export default function Form() {
       />
       <CustomRadioButton
         isChecked={isChecked}
+        radioButtonType="icon"
         onPress={() => setIsChecked(!isChecked)}
       />
       <CustomPopup

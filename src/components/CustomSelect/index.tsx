@@ -6,8 +6,7 @@ import {
   Animated,
   Dimensions,
   StyleProp,
-  ViewProps,
-  TouchableOpacityProps,
+  ViewStyle,
 } from 'react-native';
 import CustomSelectDropdown from './CustomSelectDropdown';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
@@ -20,8 +19,8 @@ export interface CustomSelectProps {
   multiple?: boolean;
   selectedValue?: any;
   onSelectItem?: any;
-  containerStyles?: StyleProp<ViewProps>;
-  customSelectStyles?: StyleProp<ViewProps>;
+  containerStyles?: StyleProp<ViewStyle>;
+  customSelectStyles?: StyleProp<ViewStyle>;
   dropdownIconSize?: number;
 }
 
@@ -30,13 +29,13 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   label = 'Label',
   withSearch = false,
   data = [],
+  selectedValue = multiple ? [] : '',
   onSelectItem = null,
   containerStyles = {},
   customSelectStyles = {},
   dropdownIconSize = 18,
 }) => {
   const [dropdownPosition, setDropdownPosition] = useState(0);
-  const [selectedValue, setSelectedValue] = useState(!multiple ? '' : []);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   const dropdownAnim = useRef(new Animated.Value(0)).current;
@@ -82,7 +81,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
           onPress={() => setIsDropdownVisible(!isDropdownVisible)}>
           {multiple === true ? (
             selectedValue &&
-            selectedValue.map((value, index) => {
+            selectedValue.map((value: any, index: number) => {
               return (
                 <Text
                   style={{color: colors.SELECTED_OPTION_COLOR}}
@@ -115,7 +114,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
             showsVerticalScrollIndicator={false}
             style={{
               height: dropdownAnim,
-              backgroundColor: '#e1e1e1',
+              backgroundColor: '#909090',
               width: '100%',
               position: 'absolute',
               top: dropdownPosition && dropdownPosition,
@@ -125,9 +124,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
             <CustomSelectDropdown
               values={data}
               selectedValue={selectedValue}
-              setSelectedValue={setSelectedValue}
               onSelectItem={onSelectItem}
-              isDropdownVisible={isDropdownVisible}
               setIsDropdownVisible={setIsDropdownVisible}
               multiple={multiple}
               withSearch={withSearch}

@@ -3,8 +3,10 @@ import Icon from 'react-native-vector-icons/dist/Entypo';
 import {
   TouchableOpacity as NativeTouchableOpacity,
   TouchableOpacityProps as NativeTouchableOpacityprops,
+  StyleProp,
   Text,
   View,
+  ViewStyle,
 } from 'react-native';
 import {colors} from '../../constants/colors';
 
@@ -16,6 +18,7 @@ export interface CustomRadioButtonProps extends NativeTouchableOpacityprops {
   uncheckedColor?: string;
   radioButtonShape?: 'circle' | 'square';
   radioButtonType?: 'icon' | 'color';
+  containerStyles?: StyleProp<ViewStyle>;
 }
 
 const CustomRadioButton: React.FC<CustomRadioButtonProps> = ({
@@ -26,18 +29,21 @@ const CustomRadioButton: React.FC<CustomRadioButtonProps> = ({
   labelPosition = 'left',
   radioButtonShape = 'square',
   radioButtonType = 'color',
+  containerStyles = {},
   ...rest
 }) => {
   return (
     <View
-      style={{
-        marginTop: 20,
-        flexDirection:
-          labelPosition === 'left' || labelPosition === 'right'
-            ? 'row'
-            : 'column',
-        gap: labelPosition === 'left' || labelPosition === 'right' ? 8 : 4,
-      }}>
+      style={[
+        {
+          flexDirection:
+            labelPosition === 'left' || labelPosition === 'right'
+              ? 'row'
+              : 'column',
+          gap: labelPosition === 'left' || labelPosition === 'right' ? 8 : 4,
+        },
+        containerStyles,
+      ]}>
       {labelPosition === 'top' && <Text>{label}</Text>}
       {labelPosition === 'left' && <Text>{label}</Text>}
       <NativeTouchableOpacity
