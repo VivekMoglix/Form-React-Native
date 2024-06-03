@@ -1,55 +1,63 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Button from './src/components/CustomButton';
-import LottieView from 'lottie-react-native';
 import {View} from 'react-native';
-
-const dummyArr = [
-  'one',
-  'two',
-  'three',
-  'four',
-  'five',
-  'six',
-  'seven',
-  'eight',
-  'nine',
-  'ten',
-];
+import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import colors from './src/constants/colors';
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <View
       style={{
-        flex: 1,
-        backgroundColor: 'blue',
+        backgroundColor: 'white',
+        padding: 25,
       }}>
-      <Button />
-      <View
-        style={{
-          zIndex: 999,
-          marginTop: 30,
-          backgroundColor: 'yellow',
-          flex: 1,
-        }}>
-        <LottieView
-          style={{
-            width: 200,
-            height: 200,
-          }}
-          source={require('./src/assets/hindi3.json')}
-          autoPlay={true}
-          loop={false}
-        />
-        <LottieView
-          style={{
-            width: 200,
-            height: 200,
-          }}
-          source={require('./src/assets/hindi2.json')}
-          autoPlay
-          loop={false}
-        />
-      </View>
+      <Button
+        isLoading={isLoading}
+        label="Add to Cart"
+        isLabelUppercase
+        theme="primary"
+        disabled={isLoading}
+        leftIcon={<MatIcon name="cart" color={colors.white} size={20} />}
+        rightIcon={
+          <MatIcon name="chevron-right" color={colors.white} size={24} />
+        }
+      />
+      <Button
+        isLoading={isLoading}
+        withLabel={false}
+        isLabelUppercase
+        theme="primary"
+        disabled={isLoading}
+        leftIcon={<MatIcon name="cart" color={colors.white} size={20} />}
+        buttonStyle={{marginVertical: 10}}
+      />
+      <Button
+        variant="outlined"
+        isLoading={isLoading}
+        label="Add to Cart"
+        isLabelUppercase
+        theme="secondary"
+        disabled={isLoading}
+        leftIcon={
+          <MatIcon name="cart" color={colors.RedThemeColor} size={20} />
+        }
+        rightIcon={
+          <MatIcon
+            name="chevron-right"
+            color={colors.RedThemeColor}
+            size={24}
+          />
+        }
+        buttonStyle={{marginBottom: 10}}
+      />
+      <Button
+        onPress={() => setIsLoading(!isLoading)}
+        size="small"
+        label="Play Loader"
+        isLabelUppercase
+        theme="secondary"
+      />
     </View>
   );
 }
