@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   TextInput as NativeInput,
@@ -19,19 +19,20 @@ export interface TextInputProps extends NativeInputProps {
   labelStyles?: StyleProp<TextStyle>;
   containerStyles?: StyleProp<ViewStyle>;
   leading?:
-    | React.ReactNode
-    | ((props: {color: string; size: number}) => React.ReactNode | null)
-    | null;
+  | React.ReactNode
+  | ((props: { color: string; size: number }) => React.ReactNode | null)
+  | null;
   trailing?:
-    | React.ReactNode
-    | ((props: {color: string; size: number}) => React.ReactNode | null)
-    | null;
+  | React.ReactNode
+  | ((props: { color: string; size: number }) => React.ReactNode | null)
+  | null;
   textStyles?: StyleProp<TextStyle>;
   backgroundColor?: string;
   placeholder?: string;
   focusColor?: string;
   errorState?: boolean;
   errorText?: string;
+  disabled?: boolean;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -49,24 +50,25 @@ const TextInput: React.FC<TextInputProps> = ({
   focusColor = DefaultAppColors.lightGrayText,
   errorState = false,
   errorText = '',
+  disabled = false,
   ...rest
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [labelActive, setLabelActive] = useState(false);
-  const props = {...rest};
-  let {value} = props;
+  const props = { ...rest };
+  let { value } = props;
 
   const leadingNode =
     typeof leading === 'function'
-      ? leading({color: '#f00', size: 24})
+      ? leading({ color: '#f00', size: 24 })
       : leading;
 
   const trailingNode =
     typeof trailing === 'function'
       ? trailing({
-          color: '#f00',
-          size: 24,
-        })
+        color: '#f00',
+        size: 24,
+      })
       : trailing;
 
   useEffect(() => {
@@ -97,7 +99,7 @@ const TextInput: React.FC<TextInputProps> = ({
             paddingLeft: 6,
             paddingVertical: 8,
             borderRadius: variant === 'outlined' ? 8 : 0,
-            backgroundColor: 'transparent',
+            backgroundColor: disabled ? DefaultAppColors.ProductBorderColor : 'transparent',
             borderWidth: variant === 'outlined' ? 1 : 0,
             borderBottomWidth:
               variant === 'standard' ? 1 : variant === 'outlined' ? 1 : 0,
@@ -105,8 +107,8 @@ const TextInput: React.FC<TextInputProps> = ({
             borderColor: errorState
               ? colors.RedThemeColor
               : isFocused
-              ? focusColor
-              : DefaultAppColors.gray2,
+                ? focusColor
+                : DefaultAppColors.gray2,
             width: '100%',
             marginTop: Dimension.margin20,
             height: Dimension.height40,
@@ -126,8 +128,8 @@ const TextInput: React.FC<TextInputProps> = ({
                     ? -8
                     : 15
                   : labelActive
-                  ? -10
-                  : 14,
+                    ? -10
+                    : 14,
               left: leading ? 26 : 12,
               zIndex: 2,
               paddingLeft: 4,
@@ -149,6 +151,7 @@ const TextInput: React.FC<TextInputProps> = ({
         )}
         {leadingNode && <View>{leadingNode}</View>}
         <NativeInput
+          editable={!disabled}
           onFocus={handleFocus}
           onBlur={handleBlur}
           {...rest}
@@ -167,7 +170,7 @@ const TextInput: React.FC<TextInputProps> = ({
           placeholder={isFocused ? placeholder : ''}
         />
         {trailingNode && (
-          <View style={{marginLeft: 'auto'}}>{trailingNode}</View>
+          <View style={{ marginLeft: 'auto' }}>{trailingNode}</View>
         )}
       </View>
       {errorState && (

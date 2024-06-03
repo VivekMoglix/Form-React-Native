@@ -3,6 +3,9 @@ import Button from './src/components/CustomButton';
 import {View} from 'react-native';
 import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from './src/constants/colors';
+import TextInput from './src/components/TextInput';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {DefaultAppColors} from 'mog-react-native-form-fields';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,7 +15,28 @@ export default function App() {
         backgroundColor: 'white',
         padding: 25,
       }}>
-      <Button
+      <TextInput label="Enter Value" />
+      <TextInput label="Enter Value" value="Moglix" />
+      <TextInput label="Enter Value" disabled={true} />
+      <TextInput
+        label="Enter Value"
+        leading={<Icon name={'search'} size={20} />}
+      />
+      <TextInput
+        label="Enter Value"
+        trailing={
+          <Button
+            buttonStyle={{
+              backgroundColor: DefaultAppColors.BlueText,
+              marginVertical: -10,
+              paddingHorizontal: 15,
+            }}
+            textStyles={{color: DefaultAppColors.white}}
+          />
+        }
+      />
+
+      {/* <Button
         isLoading={isLoading}
         label="Add to Cart"
         isLabelUppercase
@@ -22,8 +46,8 @@ export default function App() {
         rightIcon={
           <MatIcon name="chevron-right" color={colors.white} size={24} />
         }
-      />
-      <Button
+      /> */}
+      {/* <Button
         isLoading={isLoading}
         withLabel={false}
         isLabelUppercase
@@ -57,7 +81,7 @@ export default function App() {
         label="Play Loader"
         isLabelUppercase
         theme="secondary"
-      />
+      /> */}
     </View>
   );
 }
