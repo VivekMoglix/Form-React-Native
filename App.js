@@ -1,9 +1,8 @@
-import Form from './src/container/Form';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {useState} from 'react';
-import TextInput from './src/components/TextInput/index';
-import {TextInput as PackageInput} from 'mog-react-native-form-fields';
-import Dimension from './src/constants/dimensions';
+import React from 'react';
+import Button from './src/components/CustomButton';
+import LottieView from 'lottie-react-native';
+import {View} from 'react-native';
+
 const dummyArr = [
   'one',
   'two',
@@ -18,27 +17,39 @@ const dummyArr = [
 ];
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [textValue, setTextValue] = useState('');
-  const [selectedValue, setSelectedValue] = useState('');
   return (
-    <GestureHandlerRootView
+    <View
       style={{
-        padding: 15,
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: 'blue',
       }}>
-      <TextInput
-        label="Full Name"
-        value={textValue}
-        onChangeText={setTextValue}
-      />
-      <PackageInput
-        focusColor="#979797"
-        label="Phone"
-        value={textValue}
-        onChangeText={setTextValue}
-      />
-    </GestureHandlerRootView>
+      <Button />
+      <View
+        style={{
+          zIndex: 999,
+          marginTop: 30,
+          backgroundColor: 'yellow',
+          flex: 1,
+        }}>
+        <LottieView
+          style={{
+            width: 200,
+            height: 200,
+          }}
+          source={require('./src/assets/hindi3.json')}
+          autoPlay={true}
+          loop={false}
+        />
+        <LottieView
+          style={{
+            width: 200,
+            height: 200,
+          }}
+          source={require('./src/assets/hindi2.json')}
+          autoPlay
+          loop={false}
+        />
+      </View>
+    </View>
   );
 }

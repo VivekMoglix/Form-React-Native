@@ -8,17 +8,22 @@ import {
   Animated,
   Easing,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
-import {colors} from '../../constants/colors';
+import colors from '../../constants/colors';
+import Dimension from '../../constants/dimensions';
 
 export interface CustomPopupProps extends NativeViewProps {
-  position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+  position?: 'top' | 'bottom';
   containerStyle?: NativeViewProps['style'];
   textStyle?: StyleProp<TextStyle>;
   message?: string;
-  timer?: number;
-  popupColor?: 'success' | 'error' | 'warning' | string;
+  visibilityTime?: number;
+  popupColor?: 'success' | 'error' | string;
   loaderColor?: string;
+  hasButton?: boolean;
+  buttonLabel?: string;
+  onPress?: () => {};
 }
 
 const CustomPopup: React.FC<CustomPopupProps> = ({
@@ -26,30 +31,33 @@ const CustomPopup: React.FC<CustomPopupProps> = ({
   containerStyle,
   textStyle,
   message = 'your message here',
-  timer = 3000,
-  loaderColor = colors.SELECTED_OPTION_COLOR,
-  popupColor = colors.DEFAULT_BUTTON_DARK_GRAY,
+  visibilityTime = 2000,
+  loaderColor = colors.lightGrayText,
+  popupColor = colors.LightTextColor,
+  hasButton = false,
+  buttonLabel = 'Button',
+  onPress = () => {},
   ...rest
 }) => {
-  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
   const loadingAnim = useRef(new Animated.Value(100)).current;
-  const slideInAnim = useRef(new Animated.Value(-windowWidth)).current;
+  const slideInAnim = useRef(new Animated.Value(-windowHeight)).current;
   useEffect(() => {
     Animated.sequence([
       Animated.timing(slideInAnim, {
-        toValue: 0,
+        toValue: 30,
         duration: 1500,
         easing: Easing.linear,
         useNativeDriver: false,
       }),
       Animated.timing(loadingAnim, {
         toValue: 0,
-        duration: timer,
+        duration: visibilityTime,
         easing: Easing.linear,
         useNativeDriver: false,
       }),
       Animated.timing(slideInAnim, {
-        toValue: -windowWidth,
+        toValue: -windowHeight,
         duration: 1500,
         easing: Easing.linear,
         useNativeDriver: false,
@@ -63,27 +71,52 @@ const CustomPopup: React.FC<CustomPopupProps> = ({
       style={[
         {
           position: 'absolute',
-          top: position.includes('top') ? 0 : null,
-          right: position.includes('right') ? slideInAnim : null,
-          bottom: position.includes('bottom') ? 0 : null,
-          left: position.includes('left') ? slideInAnim : null,
+          top: position.includes('top') ? slideInAnim : null,
+          bottom: position.includes('bottom') ? slideInAnim : null,
           backgroundColor:
             popupColor === 'success'
-              ? '#22bb33'
+              ? colors.LightTextColor
               : popupColor === 'error'
-              ? '#bb2124'
-              : popupColor === 'warning'
-              ? '#f0ad4e'
+              ? colors.error
               : popupColor,
           borderRadius: 8,
           overflow: 'hidden',
+          width: '100%',
+          alignSelf: 'center',
         },
         containerStyle,
       ]}>
-      <Text
-        style={[{textAlign: 'left', color: 'white', padding: 12}, textStyle]}>
-        {message}
-      </Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          padding: hasButton ? 8 : 12,
+        }}>
+        <Text
+          style={[
+            {
+              textAlign: 'left',
+              color: '#fff',
+              fontSize: Dimension.font12,
+              fontFamily: Dimension.CustomMediumFont,
+            },
+            textStyle,
+          ]}>
+          {message}
+        </Text>
+        {hasButton ? (
+          <TouchableOpacity
+            onPress={onPress}
+            style={{
+              marginLeft: 'auto',
+              backgroundColor: colors.lightGrayText,
+              padding: 8,
+              borderRadius: 4,
+            }}>
+            <Text style={{color: 'white'}}>{buttonLabel}</Text>
+          </TouchableOpacity>
+        ) : null}
+      </View>
       <Animated.View
         style={{
           marginTop: 'auto',
@@ -97,6 +130,10 @@ const CustomPopup: React.FC<CustomPopupProps> = ({
       />
     </Animated.View>
   );
+};
+
+const ToastMessage = (props: any) => {
+  <CustomPopup {...props} />;
 };
 
 export default CustomPopup;
