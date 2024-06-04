@@ -8,7 +8,7 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
-import {colors} from '../../constants/colors';
+import colors from '../../constants/colors';
 
 export interface SwitchProps extends NativeSwitchProps {
   label?: string;
@@ -16,11 +16,12 @@ export interface SwitchProps extends NativeSwitchProps {
   style?: NativeSwitchProps['style'];
   containerStyles?: StyleProp<ViewStyle>;
   trackColor?:
-    | {
-        false?: string | null | undefined;
-        true?: string | null | undefined;
-      }
-    | undefined;
+  | {
+    false?: string | null | undefined;
+    true?: string | null | undefined;
+  }
+  | undefined;
+  labelStyles?: StyleProp<ViewStyle>;
 }
 
 const Switch: React.FC<SwitchProps> = ({
@@ -28,13 +29,13 @@ const Switch: React.FC<SwitchProps> = ({
   labelPosition = 'leading',
   style,
   containerStyles,
-  trackColor = {false: colors.buttonDarkGray, true: colors.buttonDarkGray},
+  trackColor = { false: colors.GreenColor, true: colors.RedThemeColor },
   labelStyles,
   ...rest
 }) => {
   return (
     <View
-      style={[{flexDirection: 'row', alignItems: 'center'}, containerStyles]}>
+      style={[{ flexDirection: 'row', alignItems: 'center' }, containerStyles]}>
       {labelPosition === 'leading' && <Text style={labelStyles}>{label}</Text>}
       <NativeSwitch {...rest} trackColor={trackColor} />
       {labelPosition === 'trailing' && <Text style={labelStyles}>{label}</Text>}
