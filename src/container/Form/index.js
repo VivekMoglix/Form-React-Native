@@ -1,13 +1,13 @@
 import {Text, TouchableOpacity, View} from 'react-native';
 import CustomTextInput from '../../components/TextInput';
 import React, {useState} from 'react';
-import CustomButton from '../../components/CustomButton';
-import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import CustomSwitch from '../../components/CustomSwitch';
 import CustomPopup from '../../components/CustomPopup';
 import CustomRadioButton from '../../components/CustomRadioButton';
-import {colors} from '../../constants/colors';
+import colors from '../../constants/colors';
 import CustomSelect from '../../components/CustomSelect';
+import Button from '../../components/CustomButton';
+import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const dummyArr = [
   'one',
@@ -30,43 +30,132 @@ export default function Form() {
   const [textValue, setTextValue] = useState('');
 
   return (
-    <View style={{flex: 1}}>
-      <CustomTextInput
-        inputContainerStyles={{marginBottom: 30}}
-        value={textValue}
-        onChangeText={setTextValue}
-      />
-      <CustomButton />
-      <CustomSwitch
-        containerStyle={{marginTop: 20}}
-        value={isSwitchActive}
-        thumbColor={
-          isSwitchActive
-            ? colors.SELECTED_OPTION_COLOR
-            : colors.UNSELECTED_OPTION_COLOR
-        }
-        onValueChange={() => setIsSwitchActive(!isSwitchActive)}
-      />
-      <CustomRadioButton
-        isChecked={isChecked}
-        radioButtonType="icon"
-        onPress={() => setIsChecked(!isChecked)}
-      />
-      <CustomPopup
-        position="bottom-right"
-        message="your custom message is here"
-        timer={3000}
-      />
-      <CustomSelect
-        withSearch={true}
-        containerStyles={{marginTop: 20}}
-        multiple={false}
-        label="Custom Select"
-        data={dummyArr}
-        onSelectItem={(selectedItem, index) => {
-          setSelectedValue(selectedItem);
-        }}
-      />
+    <View style={{flex: 1, marginHorizontal: 30, marginVertical: 20}}>
+      <Text style={{fontWeight: 'bold', fontSize: 14, color: colors.black}}>
+        Primary Small Buttons
+      </Text>
+      <View
+        style={{flexDirection: 'row', alignItems: 'center', marginBottom: 30}}>
+        <Button
+          isLoading={isLoading}
+          disabled={isLoading}
+          withLabel={false}
+          isLabelUppercase
+          leftIcon={<MatIcon name="cart" size={24} color={colors.white} />}
+          buttonStyle={{marginVertical: 20}}
+        />
+        <Button
+          onPress={() => setIsLoading(!isLoading)}
+          isLabelUppercase
+          leftIcon={<MatIcon name="cart" size={24} color={colors.white} />}
+          buttonStyle={{marginVertical: 20, marginHorizontal: 15}}
+        />
+        <Button
+          disabled={true}
+          onPress={() => setIsLoading(!isLoading)}
+          isLabelUppercase
+          leftIcon={<MatIcon name="cart" size={24} color={colors.white} />}
+          buttonStyle={{marginVertical: 20}}
+        />
+      </View>
+      <Text style={{fontWeight: 'bold', fontSize: 14, color: colors.black}}>
+        Primary Medium Buttons
+      </Text>
+      <View
+        style={{flexDirection: 'row', alignItems: 'center', marginBottom: 30}}>
+        <Button
+          buttonSize="medium"
+          isLoading={isLoading}
+          withLabel={false}
+          isLabelUppercase
+          leftIcon={<MatIcon name="cart" size={24} color={colors.white} />}
+          buttonStyle={{marginVertical: 20}}
+        />
+        <Button
+          buttonSize="medium"
+          onPress={() => setIsLoading(!isLoading)}
+          isLabelUppercase
+          leftIcon={<MatIcon name="cart" size={24} color={colors.white} />}
+          buttonStyle={{marginVertical: 20, marginHorizontal: 15}}
+        />
+        <Button
+          disabled={true}
+          buttonSize="medium"
+          onPress={() => setIsLoading(!isLoading)}
+          isLabelUppercase
+          leftIcon={<MatIcon name="cart" size={24} color={colors.white} />}
+          buttonStyle={{marginVertical: 20}}
+        />
+      </View>
+      <Text style={{fontWeight: 'bold', fontSize: 14, color: colors.black}}>
+        Secondary Small Buttons
+      </Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginBottom: 30,
+        }}>
+        <Button
+          theme="secondary"
+          withLabel={false}
+          isLabelUppercase
+          leftIcon={
+            <MatIcon name="cart" size={24} color={colors.RedThemeColor} />
+          }
+          buttonStyle={{marginVertical: 20}}
+        />
+        <Button
+          theme="secondary"
+          isLabelUppercase
+          leftIcon={
+            <MatIcon name="cart" size={24} color={colors.RedThemeColor} />
+          }
+          buttonStyle={{marginVertical: 20, marginHorizontal: 15}}
+        />
+        <Button
+          disabled={true}
+          isLabelUppercase
+          leftIcon={<MatIcon name="cart" size={24} color={colors.white} />}
+          buttonStyle={{marginVertical: 20}}
+        />
+      </View>
+      <Text style={{fontWeight: 'bold', fontSize: 14, color: colors.black}}>
+        Secondary Medium Buttons
+      </Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginBottom: 30,
+        }}>
+        <Button
+          buttonSize="medium"
+          theme="secondary"
+          withLabel={false}
+          isLabelUppercase
+          leftIcon={
+            <MatIcon name="cart" size={24} color={colors.RedThemeColor} />
+          }
+          buttonStyle={{marginVertical: 20}}
+        />
+        <Button
+          buttonSize="medium"
+          theme="secondary"
+          isLabelUppercase
+          leftIcon={
+            <MatIcon name="cart" size={24} color={colors.RedThemeColor} />
+          }
+          buttonStyle={{marginVertical: 20, marginHorizontal: 15}}
+        />
+        <Button
+          buttonSize="medium"
+          disabled={true}
+          isLabelUppercase
+          leftIcon={<MatIcon name="cart" size={24} color={colors.white} />}
+          buttonStyle={{marginVertical: 20}}
+        />
+      </View>
     </View>
   );
 }

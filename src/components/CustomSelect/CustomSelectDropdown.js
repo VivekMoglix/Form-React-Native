@@ -1,5 +1,5 @@
 import {Modal, Text, TouchableOpacity, View} from 'react-native';
-import {colors} from '../../constants/colors';
+import colors from '../../constants/colors';
 import CustomTextInput from '../TextInput';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import React, {useEffect, useMemo, useState} from 'react';
@@ -60,8 +60,8 @@ const CustomSelectDropdown = ({
               <Text
                 style={{
                   color: selectedValue.includes(value)
-                    ? colors.SELECTED_OPTION_COLOR
-                    : colors.UNSELECTED_OPTION_COLOR,
+                    ? colors.blueShade
+                    : colors.lightGrayText,
                 }}>
                 {value}
               </Text>

@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import CustomSelectDropdown from './CustomSelectDropdown';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
-import {colors} from '../../constants/colors';
+import colors from '../../constants/colors';
 
 export interface CustomSelectProps {
   data?: [];
@@ -68,7 +68,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
             {
               flexDirection: 'row',
               borderWidth: 1,
-              borderColor: colors.DEFAULT_BUTTON_DARK_GRAY,
+              borderColor: colors.grayOrderCta,
               padding: 12,
               borderRadius: 4,
             },
@@ -84,16 +84,14 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
             selectedValue.map((value: any, index: number) => {
               return (
                 <Text
-                  style={{color: colors.SELECTED_OPTION_COLOR}}
+                  style={{color: colors.grayOrderCta}}
                   key={value + index}>{`${value}${
                   index !== selectedValue.length - 1 ? ', ' : ''
                 }`}</Text>
               );
             })
           ) : (
-            <Text style={{color: colors.SELECTED_OPTION_COLOR}}>
-              {selectedValue}
-            </Text>
+            <Text style={{color: colors.grayOrderCta}}>{selectedValue}</Text>
           )}
           {isDropdownVisible ? (
             <Icon

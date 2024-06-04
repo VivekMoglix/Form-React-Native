@@ -37,6 +37,7 @@ export interface ButtonProps extends NativeTouchableProps {
   theme?: 'primary' | 'secondary' | 'black-white';
   alignRightIconEnd?: boolean;
   disabledColor?: string;
+  buttonSize?: 'small' | 'medium';
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -51,7 +52,7 @@ const Button: React.FC<ButtonProps> = ({
   textStyles,
   loaderPosition = 'leading',
   disabled = false,
-  disabledColor = DefaultAppColors.ProductBorderColor,
+  disabledColor = DefaultAppColors.lightGrayText,
   loaderColor = variant == 'filled'
     ? DefaultAppColors.white
     : disabled
@@ -61,8 +62,9 @@ const Button: React.FC<ButtonProps> = ({
   rightIcon,
   buttonStyle,
   isLabelUppercase = false,
-  theme = 'secondary',
+  theme = 'primary',
   alignRightIconEnd = false,
+  buttonSize = 'small',
   ...rest
 }) => {
   const [textWidth, setTextWidth] = useState(0);
@@ -91,6 +93,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
       style={[
         {
+          height: buttonSize == 'small' ? 40 : buttonSize == 'medium' ? 50 : 40,
           alignItems: 'center',
           justifyContent: 'center',
           borderWidth: variant === 'outlined' ? 1 : 0,
@@ -102,7 +105,7 @@ const Button: React.FC<ButtonProps> = ({
                 ? disabledColor
                 : DefaultAppColors.RedThemeColor
               : DefaultAppColors.PrimaryTextColor,
-          padding: 8,
+          paddingHorizontal: 10,
           flexDirection: 'row',
           borderRadius: 4,
           backgroundColor:
@@ -118,52 +121,49 @@ const Button: React.FC<ButtonProps> = ({
         },
         buttonStyle,
       ]}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        {isLoading
-          ? null
-          : LeftIcon && <View style={{marginRight: 5}}>{LeftIcon}</View>}
-        {isLoading ? (
-          <ActivityIndicator
-            style={{
-              alignSelf: 'center',
-            }}
-            size={loaderSize}
-            color={loaderColor}
-          />
-        ) : withLabel ? (
-          <Text
-            onLayout={event => {
-              const {width} = event.nativeEvent.layout;
-              setTextWidth(width);
-            }}
-            style={[
-              {
-                justifyContent: 'center',
-                color:
-                  theme === 'primary'
-                    ? DefaultAppColors.white
-                    : DefaultAppColors.RedThemeColor,
-                textTransform: isLabelUppercase ? 'uppercase' : 'none',
-                fontSize:
-                  labelFontSize === 'font12'
-                    ? Dimension.font12
-                    : Dimension.font14,
-                fontFamily: Dimension.CustomBoldFont,
-              },
-              textStyles,
-            ]}>
-            {label}
-          </Text>
-        ) : null}
-        {isLoading
-          ? null
-          : RightIcon && <View style={{marginLeft: 5}}>{RightIcon}</View>}
-      </View>
+      {isLoading
+        ? null
+        : LeftIcon && (
+            <View style={{marginRight: withLabel ? 5 : 0}}>{LeftIcon}</View>
+          )}
+      {isLoading ? (
+        <ActivityIndicator
+          style={{
+            alignSelf: 'center',
+          }}
+          size={loaderSize}
+          color={loaderColor}
+        />
+      ) : withLabel ? (
+        <Text
+          onLayout={event => {
+            const {width} = event.nativeEvent.layout;
+            setTextWidth(width);
+          }}
+          style={[
+            {
+              justifyContent: 'center',
+              color:
+                theme === 'primary'
+                  ? DefaultAppColors.white
+                  : DefaultAppColors.RedThemeColor,
+              textTransform: isLabelUppercase ? 'uppercase' : 'none',
+              fontSize:
+                labelFontSize === 'font12'
+                  ? Dimension.font12
+                  : Dimension.font14,
+              fontFamily: Dimension.CustomBoldFont,
+            },
+            textStyles,
+          ]}>
+          {label}
+        </Text>
+      ) : null}
+      {isLoading
+        ? null
+        : RightIcon && (
+            <View style={{marginLeft: withLabel ? 5 : 0}}>{RightIcon}</View>
+          )}
     </NativeTouchable>
   );
 };

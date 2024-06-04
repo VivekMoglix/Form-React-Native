@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Button from './src/components/CustomButton';
-import {View} from 'react-native';
+import {SafeAreaView, TouchableOpacity, View} from 'react-native';
 import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from './src/constants/colors';
 import TextInput from './src/components/TextInput';
@@ -8,79 +8,81 @@ import RadioButton from './src/components/CustomRadioButton';
 import Switch from './src/components/CustomSwitch';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {DefaultAppColors} from 'mog-react-native-form-fields';
+import Form from './src/container/Form';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   return (
-    <View
-      style={{
-        backgroundColor: 'white',
-        padding: 25,
-      }}>
-      {/* <TextInput label="Enter Value" /> */}
-      <RadioButton
-        label="Check All"
-        labelPosition="right"
-        isChecked={true}
-        radioButtonType="icon"
-        containerStyles={{marginBottom: 10}}
-      />
-      <RadioButton
-        label="Check 1"
-        labelPosition="right"
-        checkedColor="#0770f0"
-        containerStyles={{marginBottom: 10}}
-        radioButtonType="icon"
-      />
-      <RadioButton
-        label="Check 2"
-        labelPosition="right"
-        checkedColor="#0770f0"
-        containerStyles={{marginBottom: 10}}
-        radioButtonType="icon"
-      />
-      <RadioButton
-        label="Check 3"
-        labelPosition="right"
-        checkedColor="#0770f0"
-        containerStyles={{marginBottom: 10}}
-        radioButtonType="icon"
-      />
-      <View style={{flexDirection: 'row'}}>
+    <>
+      <View
+        style={{
+          backgroundColor: 'white',
+          padding: 25,
+        }}>
+        {/* <TextInput label="Enter Value" /> */}
+        <RadioButton
+          label="Check All"
+          labelPosition="right"
+          isChecked={true}
+          radioButtonType="icon"
+          containerStyles={{marginBottom: 10}}
+        />
+        <RadioButton
+          label="Check 1"
+          labelPosition="right"
+          checkedColor="#0770f0"
+          containerStyles={{marginBottom: 10}}
+          radioButtonType="icon"
+        />
+        <RadioButton
+          label="Check 2"
+          labelPosition="right"
+          checkedColor="#0770f0"
+          containerStyles={{marginBottom: 10}}
+          radioButtonType="icon"
+        />
+        <RadioButton
+          label="Check 3"
+          labelPosition="right"
+          checkedColor="#0770f0"
+          containerStyles={{marginBottom: 10}}
+          radioButtonType="icon"
+        />
+        <View style={{flexDirection: 'row'}}>
+          <RadioButton
+            label="Option 1"
+            labelPosition="right"
+            radioButtonShape="circle"
+            containerStyles={{margin: 10}}
+            radioButtonType="color"
+            isChecked={true}
+          />
+          <RadioButton
+            label="Option 2"
+            labelPosition="right"
+            radioButtonShape="circle"
+            containerStyles={{margin: 10}}
+          />
+        </View>
+
         <RadioButton
           label="Option 1"
           labelPosition="right"
           radioButtonShape="circle"
           containerStyles={{margin: 10}}
-          radioButtonType="color"
-          isChecked={true}
         />
         <RadioButton
           label="Option 2"
           labelPosition="right"
           radioButtonShape="circle"
           containerStyles={{margin: 10}}
+          radioButtonType="color"
+          isChecked={true}
         />
-      </View>
 
-      <RadioButton
-        label="Option 1"
-        labelPosition="right"
-        radioButtonShape="circle"
-        containerStyles={{margin: 10}}
-      />
-      <RadioButton
-        label="Option 2"
-        labelPosition="right"
-        radioButtonShape="circle"
-        containerStyles={{margin: 10}}
-        radioButtonType="color"
-        isChecked={true}
-      />
+        <Switch labelPosition="trailing" label="Slide Me!" />
 
-      <Switch labelPosition="trailing" label="Slide Me!" />
-
-      {/* <TextInput label="Enter Value" value="Moglix" />
+        {/* <TextInput label="Enter Value" value="Moglix" />
       <TextInput label="Enter Value" disabled={true} />
       <TextInput
         label="Enter Value"
@@ -100,7 +102,7 @@ export default function App() {
         }
       /> */}
 
-      {/* <Button
+        {/* <Button
         isLoading={isLoading}
         label="Add to Cart"
         isLabelUppercase
@@ -111,7 +113,7 @@ export default function App() {
           <MatIcon name="chevron-right" color={colors.white} size={24} />
         }
       /> */}
-      {/* <Button
+        {/* <Button
         isLoading={isLoading}
         withLabel={false}
         isLabelUppercase
@@ -146,6 +148,10 @@ export default function App() {
         isLabelUppercase
         theme="secondary"
       /> */}
-    </View>
+      </View>
+      <SafeAreaView style={{flex: 1}}>
+        <Form />
+      </SafeAreaView>
+    </>
   );
 }
