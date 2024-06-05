@@ -8,9 +8,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import colors from '../../constants/colors';
-import DefaultAppColors from "../../constants/colors";
-
+import DefaultAppColors from '../../constants/colors';
 
 export interface CustomRadioButtonProps extends NativeTouchableOpacityprops {
   isChecked?: boolean;
@@ -21,7 +19,6 @@ export interface CustomRadioButtonProps extends NativeTouchableOpacityprops {
   radioButtonShape?: 'circle' | 'square';
   radioButtonType?: 'icon' | 'color';
   containerStyles?: StyleProp<ViewStyle>;
-
 }
 
 const CustomRadioButton: React.FC<CustomRadioButtonProps> = ({
@@ -33,7 +30,6 @@ const CustomRadioButton: React.FC<CustomRadioButtonProps> = ({
   radioButtonShape = 'square',
   radioButtonType = 'color',
   containerStyles = {},
-
   ...rest
 }) => {
   return (
@@ -52,16 +48,15 @@ const CustomRadioButton: React.FC<CustomRadioButtonProps> = ({
       {labelPosition === 'left' && <Text>{label}</Text>}
       <NativeTouchableOpacity
         {...rest}
-      // style={{
-      //   width: 24,
-      //   height: 24,
-      //   borderRadius: radioButtonShape === 'circle' ? 50 : 5,
-      //   borderWidth: 1,
-      //   borderColor: isChecked ? checkedColor : uncheckedColor,
-      //   alignItems: 'center',
-      //   justifyContent: 'center',
-      // }}
-
+        // style={{
+        //   width: 24,
+        //   height: 24,
+        //   borderRadius: radioButtonShape === 'circle' ? 50 : 5,
+        //   borderWidth: 1,
+        //   borderColor: isChecked ? checkedColor : uncheckedColor,
+        //   alignItems: 'center',
+        //   justifyContent: 'center',
+        // }}
       >
         {radioButtonType === 'color' && isChecked === true && (
           <View
@@ -75,10 +70,21 @@ const CustomRadioButton: React.FC<CustomRadioButtonProps> = ({
         )}
         {radioButtonType === 'icon' && isChecked === true ? (
           <Icon name={'checkbox-marked'} color={checkedColor} size={24} />
-        ) : radioButtonType === 'icon' && isChecked === false ? <Icon name={'checkbox-blank-outline'} color={uncheckedColor} size={24} />
-          : radioButtonType === 'color' && isChecked === false ?
-            <Icon name={'checkbox-blank-circle-outline'} color={uncheckedColor} size={24} />
-            : <Icon name={'circle-slice-8'} color={checkedColor} size={24} />}
+        ) : radioButtonType === 'icon' && isChecked === false ? (
+          <Icon
+            name={'checkbox-blank-outline'}
+            color={uncheckedColor}
+            size={24}
+          />
+        ) : radioButtonType === 'color' && isChecked === false ? (
+          <Icon
+            name={'checkbox-blank-circle-outline'}
+            color={uncheckedColor}
+            size={24}
+          />
+        ) : (
+          <Icon name={'circle-slice-8'} color={checkedColor} size={24} />
+        )}
       </NativeTouchableOpacity>
       {labelPosition === 'right' && <Text>{label}</Text>}
       {labelPosition === 'bottom' && <Text>{label}</Text>}
